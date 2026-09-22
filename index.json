@@ -5,7 +5,7 @@
     {
       "id": "org.lunadash.audio-wave",
       "name": "Audio Wave",
-      "description": "A wallpaper audio visualizer that animates only while media is playing and scales with the current desktop output volume.",
+      "description": "A smoother wallpaper audio visualizer with higher gain, 60 FPS interpolation, and playback-aware amplitude.",
       "version": "1.0.1a",
       "author": "LunaDash contributors",
       "icon": "audio-x-generic",
@@ -20,16 +20,16 @@
               "type": "integer",
               "control": "slider",
               "label": "Bar count",
-              "default": 72,
+              "default": 88,
               "minimum": 24,
-              "maximum": 120,
+              "maximum": 144,
               "step": 4
             },
             "height": {
               "type": "integer",
               "control": "slider",
               "label": "Visualizer height",
-              "default": 210,
+              "default": 280,
               "minimum": 80,
               "maximum": 420,
               "step": 10
@@ -47,7 +47,7 @@
               "type": "number",
               "control": "slider",
               "label": "Opacity",
-              "default": 0.78,
+              "default": 0.86,
               "minimum": 0.15,
               "maximum": 1,
               "step": 0.01
@@ -56,10 +56,10 @@
               "type": "number",
               "control": "slider",
               "label": "Volume sensitivity",
-              "default": 1.15,
+              "default": 2.4,
               "minimum": 0.4,
-              "maximum": 2,
-              "step": 0.05
+              "maximum": 4,
+              "step": 0.1
             },
             "mirror": {
               "type": "boolean",
@@ -90,16 +90,16 @@
           "type": "integer",
           "control": "slider",
           "label": "Bar count",
-          "default": 72,
+          "default": 88,
           "minimum": 24,
-          "maximum": 120,
+          "maximum": 144,
           "step": 4
         },
         "height": {
           "type": "integer",
           "control": "slider",
           "label": "Visualizer height",
-          "default": 210,
+          "default": 280,
           "minimum": 80,
           "maximum": 420,
           "step": 10
@@ -117,7 +117,7 @@
           "type": "number",
           "control": "slider",
           "label": "Opacity",
-          "default": 0.78,
+          "default": 0.86,
           "minimum": 0.15,
           "maximum": 1,
           "step": 0.01
@@ -126,10 +126,10 @@
           "type": "number",
           "control": "slider",
           "label": "Volume sensitivity",
-          "default": 1.15,
+          "default": 2.4,
           "minimum": 0.4,
-          "maximum": 2,
-          "step": 0.05
+          "maximum": 4,
+          "step": 0.1
         },
         "mirror": {
           "type": "boolean",
@@ -145,7 +145,7 @@
           {
             "path": "metadata.json",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.audio-wave/metadata.json",
-            "sha256": "d079a3f7eb9c71593348f42496358849ae28f6af6e91cb207a67b9e92d5b5693"
+            "sha256": "5788756671be94d6f96e9ba35705f71ccc1bef0d2451ca0908c7aa38ab88b007"
           },
           {
             "path": "CMakeLists.txt",
@@ -155,7 +155,7 @@
           {
             "path": "Main.qml",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.audio-wave/Main.qml",
-            "sha256": "31eb7255084055ee36f23df0415f8e58853f287533591e891fbe81fc57d5cbc9"
+            "sha256": "489635abed622da6ddde987645876c8618ea3369c7276d5df21660eca74baf5f"
           }
         ]
       }
