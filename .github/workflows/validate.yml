@@ -27,8 +27,8 @@ jobs:
         env:
           GITHUB_BASE_REF: ${{ github.base_ref }}
         run: python3 scripts/check_scope.py
-      - name: Verify committed catalogue
-        if: github.event_name == 'push'
+      - name: Verify catalogue generation
+        if: github.event_name == 'pull_request'
         run: python3 scripts/build_index.py --check
 
   website:
