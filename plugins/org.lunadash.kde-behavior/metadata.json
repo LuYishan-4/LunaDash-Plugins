@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "sdk": {
+    "name": "LunaDash",
+    "apiVersion": 2
+  },
+  "id": "org.lunadash.kde-behavior",
+  "name": "KDE Behavior Pack",
+  "description": "KDE-inspired taskbar, window-rule and window-animation behavior packaged as one multi-target LunaDash plugin.",
+  "version": "1.0.0",
+  "author": {
+    "name": "LunaDash contributors"
+  },
+  "icon": "preferences-desktop",
+  "tags": [
+    "KDE",
+    "Panel",
+    "Windows",
+    "Animation",
+    "Multi-target"
+  ],
+  "enabledByDefault": false,
+  "targets": [
+    {
+      "id": "panel",
+      "type": "quickshell",
+      "target": "panel",
+      "mode": "replace",
+      "entry": "KdePanel.qml",
+      "settings": {
+        "compact": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Compact task buttons",
+          "default": false
+        },
+        "showLabels": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show window titles",
+          "default": true
+        },
+        "showWorkspaceSwitcher": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show workspace switcher",
+          "default": true
+        }
+      }
+    },
+    {
+      "id": "window-rules",
+      "type": "effect",
+      "target": "window-rules",
+      "mode": "replace",
+      "entry": "liblunadash-kde-behavior.so",
+      "settings": {
+        "workspacePolicy": {
+          "type": "string",
+          "control": "select",
+          "label": "New-window workspace policy",
+          "default": "current",
+          "enum": [
+            "current",
+            "first",
+            "remember"
+          ]
+        },
+        "maximizeNewWindows": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Maximize new windows",
+          "default": false
+        }
+      }
+    },
+    {
+      "id": "window-animation",
+      "type": "effect",
+      "target": "window-animation",
+      "mode": "replace",
+      "entry": "liblunadash-kde-behavior.so",
+      "settings": {
+        "duration": {
+          "type": "integer",
+          "control": "number",
+          "label": "Animation duration",
+          "default": 220,
+          "minimum": 0,
+          "maximum": 600,
+          "step": 10
+        },
+        "enterOffset": {
+          "type": "integer",
+          "control": "number",
+          "label": "Opening offset",
+          "default": 8,
+          "minimum": -100,
+          "maximum": 100,
+          "step": 1
+        },
+        "focusOpacity": {
+          "type": "number",
+          "control": "slider",
+          "label": "Unfocused opacity",
+          "default": 0.9,
+          "minimum": 0,
+          "maximum": 1,
+          "step": 0.01
+        },
+        "exitScale": {
+          "type": "number",
+          "control": "slider",
+          "label": "Closing scale",
+          "default": 0.96,
+          "minimum": 0.5,
+          "maximum": 1,
+          "step": 0.01
+        },
+        "easing": {
+          "type": "string",
+          "control": "select",
+          "label": "Easing curve",
+          "default": "outCubic",
+          "enum": [
+            "linear",
+            "outCubic",
+            "outQuint",
+            "inOutCubic"
+          ]
+        }
+      }
+    }
+  ]
+}

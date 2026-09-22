@@ -1,7 +1,0 @@
-{
-  "storeSchemaVersion": 1,
-  "license": "GPL-3.0-or-later",
-  "repository": "https://github.com/LuYishan-4/LunaDash",
-  "upstream": "https://github.com/LuYishan-4/LunaDash/tree/fix/plugin/qml/plugins/digital-clock",
-  "featured": true
-}
