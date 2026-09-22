@@ -7,8 +7,8 @@
   "id": "org.lunadash.audio-wave",
   "name": "Audio Wave",
   "name[zh_TW]": "音訊波浪",
-  "description": "A smoother wallpaper audio visualizer with higher gain, 60 FPS interpolation, and playback-aware amplitude.",
-  "description[zh_TW]": "更流暢的桌布音訊視覺化插件；提高增益並以 60 FPS 插值，播放時振幅更明顯，停止時平滑收斂。",
+  "description": "Live desktop-output spectrum with logarithmic gain and frame-synchronized attack/release smoothing. Requires the LunaDash audio-spectrum helper and parec.",
+  "description[zh_TW]": "依系統播放輸出的真實頻譜，使用對數增益與逐幀平滑動畫。需要 LunaDash audio-spectrum helper 與 parec。",
   "version": "1.0.1a",
   "author": {
     "name": "LunaDash contributors"
@@ -42,7 +42,7 @@
           "type": "integer",
           "control": "slider",
           "label": "Visualizer height",
-          "default": 280,
+          "default": 320,
           "minimum": 80,
           "maximum": 420,
           "step": 10
@@ -68,7 +68,7 @@
         "sensitivity": {
           "type": "number",
           "control": "slider",
-          "label": "Volume sensitivity",
+          "label": "Spectrum gain",
           "default": 2.4,
           "minimum": 0.4,
           "maximum": 4,

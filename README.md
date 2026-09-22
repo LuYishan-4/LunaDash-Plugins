@@ -46,3 +46,9 @@ The runtime contract comes from LunaDash:
 - `cmake/plugins/SettingsSchema.py`
 
 Store-only fields never replace the LunaDash runtime manifest.
+
+## Audio Wave runtime
+
+Audio Wave 1.0.1a requires the LunaDash `audio-spectrum` shell helper and `parec` (Arch: `libpulse`; Debian/Ubuntu: `pulseaudio-utils`), connected to PulseAudio or PipeWire-Pulse. It monitors playback output, never the default microphone, and keeps PCM in memory only. A 32-band stereo FFT replaces the earlier MPRIS/volume-driven sine animation. Logarithmic gain and frame-time attack/release smoothing make quiet playback visible without amplifying silence. Height, gain, opacity, bar count and mirrored frequency layout remain configurable. Missing audio support shows a diagnostic with bounded reconnect attempts. Desktop widgets stay inside the wallpaper Background layer.
+
+新版 Audio Wave 使用真實播放輸出 FFT 頻譜，搭配對數增益與逐幀平滑，不再靠 MPRIS 與音量設定產生假動畫。需要本體的 `audio-spectrum` helper 和 `parec`；不讀取預設麥克風，不儲存音訊。版本仍為 `1.0.1a`，本體新版 Store 會依來源雜湊辨識同版號修訂。
