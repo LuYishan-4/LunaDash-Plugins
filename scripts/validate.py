@@ -77,14 +77,14 @@ def validate_store(folder, manifest):
     if install_files:
         require("metadata.json" in install_files,
                 f"{manifest['id']}: installFiles must include metadata.json")
+        require("CMakeLists.txt" in install_files,
+                f"{manifest['id']}: installFiles must include CMakeLists.txt")
         implementations = manifest.get("targets")
         if not isinstance(implementations, list):
             implementations = [manifest]
-        require(all(item.get("type") in ("quickshell", "qml")
-                    for item in implementations),
-                f"{manifest['id']}: source-only store install currently supports QML packages")
-        entries = {"metadata.json"}
-        entries.update(item.get("entry") for item in implementations if item.get("entry"))
+        entries = {"metadata.json", "CMakeLists.txt"}
+        entries.update(item.get("entry") for item in implementations
+                       if item.get("type") in ("quickshell", "qml") and item.get("entry"))
         require(entries <= set(install_files),
                 f"{manifest['id']}: installFiles must include every QML entry")
         for name in install_files:

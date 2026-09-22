@@ -3,5 +3,11 @@
   "license": "GPL-3.0-or-later",
   "repository": "https://github.com/LuYishan-4/LunaDash-Plugins",
   "homepage": "https://luyishan-4.github.io/LunaDash-Plugins/plugins/org.lunadash.kde-behavior/",
-  "featured": true
+  "featured": true,
+  "installFiles": [
+    "metadata.json",
+    "CMakeLists.txt",
+    "Effect.cpp",
+    "KdePanel.qml"
+  ]
 }
