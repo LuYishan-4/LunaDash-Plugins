@@ -43,6 +43,7 @@ def install_payload(folder, plugin_id, store):
     if not names:
         return None
     return {
+        "mode": "cmake",
         "files": [
             {
                 "path": name,

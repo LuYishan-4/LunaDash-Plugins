@@ -93,9 +93,9 @@ def validate_store(folder, manifest):
                     ".." not in name.split("/"),
                     f"{manifest['id']}: invalid install file path {name!r}")
             path = (folder / name).resolve()
-            require(path.is_file() and folder.resolve() in path.parents and
-                    path.stat().st_size <= 4 * 1024 * 1024,
-                    f"{manifest['id']}: missing or oversized install file {name}")
+        require(path.is_file() and folder.resolve() in path.parents and
+                path.stat().st_size <= 4 * 1024 * 1024,
+                f"{manifest['id']}: missing or oversized install file {name}")
 
     if "replacement" in store:
         require(deprecated and isinstance(store["replacement"], str) and
