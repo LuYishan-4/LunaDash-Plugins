@@ -68,7 +68,7 @@
               "type": "number",
               "control": "slider",
               "label": "Clock scale",
-              "default": 1,
+              "default": 1.0,
               "minimum": 0.7,
               "maximum": 1.5,
               "step": 0.05
@@ -77,9 +77,9 @@
               "type": "number",
               "control": "slider",
               "label": "Opacity",
-              "default": 1,
+              "default": 1.0,
               "minimum": 0.3,
-              "maximum": 1,
+              "maximum": 1.0,
               "step": 0.05
             }
           }
@@ -152,7 +152,7 @@
           "type": "number",
           "control": "slider",
           "label": "Clock scale",
-          "default": 1,
+          "default": 1.0,
           "minimum": 0.7,
           "maximum": 1.5,
           "step": 0.05
@@ -161,9 +161,9 @@
           "type": "number",
           "control": "slider",
           "label": "Opacity",
-          "default": 1,
+          "default": 1.0,
           "minimum": 0.3,
-          "maximum": 1,
+          "maximum": 1.0,
           "step": 0.05
         }
       },
