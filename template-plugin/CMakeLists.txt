@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(lunadash_example_plugin VERSION 1.0.0 LANGUAGES CXX)
+project(lunadash_example_plugin VERSION 1.0.1 LANGUAGES CXX)
 
 find_package(LunaDashPlugin 2 CONFIG REQUIRED)
 

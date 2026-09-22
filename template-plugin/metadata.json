@@ -7,7 +7,7 @@
   "id": "org.example.plugin",
   "name": "Example plugin",
   "description": "Describe the plugin.",
-  "version": "1.0.0",
+  "version": "1.0.1a",
   "author": {
     "name": "Your name"
   },
