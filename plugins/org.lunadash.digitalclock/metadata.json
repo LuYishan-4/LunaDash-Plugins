@@ -7,9 +7,9 @@
   "id": "org.lunadash.digitalclock",
   "name": "Digital Clock",
   "name[zh_TW]": "數位時鐘",
-  "description": "A configurable desktop-layer digital clock for LunaDash that stays behind application windows.",
-  "description[zh_TW]": "可調整位置、格式與外觀，且只顯示於桌面層、不覆蓋應用程式視窗的 LunaDash 數位時鐘。",
-  "version": "2.1.0",
+  "description": "A wallpaper-layer digital clock embedded inside LunaDash desktop widgets so application windows always cover it.",
+  "description[zh_TW]": "嵌入 LunaDash 桌布層的數位時鐘；一般應用程式視窗一定會覆蓋它，不再浮在視窗上方。",
+  "version": "1.0.1a",
   "author": {
     "name": "LuYishan"
   },

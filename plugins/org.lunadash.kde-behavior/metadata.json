@@ -6,8 +6,8 @@
   },
   "id": "org.lunadash.kde-behavior",
   "name": "KDE Behavior Pack",
-  "description": "KDE-inspired floating panel, freeform window layout, window rules and animations packaged as one multi-target LunaDash plugin.",
-  "version": "2.0.0",
+  "description": "KDE-inspired floating capsules, freeform windows, dashboard access, system status, window rules and animations for LunaDash.",
+  "version": "1.0.1a",
   "author": {
     "name": "LunaDash contributors"
   },
@@ -82,6 +82,12 @@
           "minimum": 0.45,
           "maximum": 1,
           "step": 0.01
+        },
+        "showDashboard": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show dashboard button",
+          "default": true
         }
       }
     },

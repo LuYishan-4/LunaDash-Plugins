@@ -1,15 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
-import Quickshell.Wayland
 
 Item {
     id: plugin
     required property var shell
     required property var settings
     required property var context
-    width: 1
-    height: 1
+    anchors.fill: parent
     property bool pluginReady: true
 
     readonly property var appearance: shell ? (shell.state.appearance || {}) : ({})
@@ -38,32 +35,32 @@ Item {
         onTriggered: plugin.now = new Date()
     }
 
-    PanelWindow {
-        id: clockWindow
-        visible: true
-        anchors.left: plugin.atLeft
-        anchors.right: !plugin.atLeft
-        anchors.top: plugin.atTop
-        anchors.bottom: !plugin.atTop
-        margins.left: plugin.atLeft ? plugin.marginX : 0
-        margins.right: plugin.atLeft ? 0 : plugin.marginX
-        margins.top: plugin.atTop ? plugin.marginY : 0
-        margins.bottom: plugin.atTop ? 0 : plugin.marginY
-        implicitWidth: Math.round(405 * plugin.clockScale)
-        implicitHeight: Math.round((plugin.showDate ? 112 : 88) * plugin.clockScale)
-        exclusiveZone: 0
-        exclusionMode: ExclusionMode.Ignore
-        color: "transparent"
-        // Render above the wallpaper but below normal application surfaces.
-        // This keeps the clock desktop-only instead of pinning it over windows.
-        WlrLayershell.layer: WlrLayer.Bottom
-        WlrLayershell.namespace: "lunadash-plugin-digital-clock"
-        WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+    Item {
+        id: clock
+        width: Math.round(405 * plugin.clockScale)
+        height: Math.round((plugin.showDate ? 112 : 88) * plugin.clockScale)
+        anchors.left: plugin.atLeft ? parent.left : undefined
+        anchors.right: plugin.atLeft ? undefined : parent.right
+        anchors.top: plugin.atTop ? parent.top : undefined
+        anchors.bottom: plugin.atTop ? undefined : parent.bottom
+        anchors.leftMargin: plugin.atLeft ? plugin.marginX : 0
+        anchors.rightMargin: plugin.atLeft ? 0 : plugin.marginX
+        anchors.topMargin: plugin.atTop ? plugin.marginY : 0
+        anchors.bottomMargin: plugin.atTop ? 0 : plugin.marginY
+        opacity: plugin.clockOpacity
+
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: -12
+            radius: 24
+            color: Qt.rgba(0.02, 0.03, 0.08, 0.16)
+            border.width: 1
+            border.color: Qt.rgba(plugin.accent.r, plugin.accent.g, plugin.accent.b, 0.12)
+        }
 
         RowLayout {
             anchors.fill: parent
             spacing: Math.round(17 * plugin.clockScale)
-            opacity: plugin.clockOpacity
 
             Text {
                 Layout.alignment: Qt.AlignVCenter
@@ -74,7 +71,7 @@ Item {
                         : (plugin.showSeconds ? "hh:mm:ss AP" : "hh:mm AP"))
                 color: plugin.primary
                 style: Text.Outline
-                styleColor: Qt.rgba(0, 0, 0, 0.38)
+                styleColor: Qt.rgba(0, 0, 0, 0.34)
                 font.family: plugin.uiFont
                 font.pixelSize: Math.round((plugin.showSeconds ? 50 : 62) * plugin.clockScale)
                 font.weight: Font.Bold
@@ -94,12 +91,9 @@ Item {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignVCenter
                 spacing: -1
-
                 Text {
                     text: plugin.locale.toString(plugin.now, "MMMM").toUpperCase()
                     color: plugin.secondary
-                    style: Text.Outline
-                    styleColor: Qt.rgba(0, 0, 0, 0.30)
                     font.family: plugin.uiFont
                     font.pixelSize: Math.round(14 * plugin.clockScale)
                     font.weight: Font.Bold
@@ -108,8 +102,6 @@ Item {
                 Text {
                     text: plugin.locale.toString(plugin.now, "dd")
                     color: plugin.primary
-                    style: Text.Outline
-                    styleColor: Qt.rgba(0, 0, 0, 0.32)
                     font.family: plugin.uiFont
                     font.pixelSize: Math.round(24 * plugin.clockScale)
                     font.weight: Font.DemiBold
@@ -118,8 +110,6 @@ Item {
                 Text {
                     text: plugin.locale.toString(plugin.now, "dddd")
                     color: plugin.secondary
-                    style: Text.Outline
-                    styleColor: Qt.rgba(0, 0, 0, 0.28)
                     font.family: plugin.uiFont
                     font.pixelSize: Math.round(13 * plugin.clockScale)
                     font.letterSpacing: 1.3 * plugin.clockScale

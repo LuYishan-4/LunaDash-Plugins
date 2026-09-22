@@ -228,10 +228,49 @@ Item {
     }
 
     Component {
+        id: dashboardButton
+        Item {
+            width: settings.showDashboard ?? true ? 34 : 0
+            height: 34
+            visible: settings.showDashboard ?? true
+            Rectangle {
+                anchors.fill: parent
+                radius: 10
+                color: dashboardMouse.containsMouse || root.shell.overviewOpen
+                    ? Qt.rgba(root.accent.r, root.accent.g, root.accent.b, 0.22)
+                    : "transparent"
+            }
+            Text {
+                anchors.centerIn: parent
+                text: "◈"
+                color: root.shell.overviewOpen ? root.accent : root.foreground
+                font.pixelSize: 14
+            }
+            MouseArea {
+                id: dashboardMouse
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root.shell.setAppearance({overview: !root.shell.overviewOpen})
+            }
+            ToolTip.visible: dashboardMouse.containsMouse
+            ToolTip.delay: 400
+            ToolTip.text: "Dashboard"
+        }
+    }
+
+    Component {
         id: settingsButton
         Item {
             width: 34
             height: 34
+            Rectangle {
+                anchors.fill: parent
+                radius: 10
+                color: settingsMouse.containsMouse || root.shell.settingsOpen
+                    ? Qt.rgba(root.accent.r, root.accent.g, root.accent.b, 0.18)
+                    : "transparent"
+            }
             Text {
                 anchors.centerIn: parent
                 text: "⚙"
@@ -245,6 +284,9 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: root.shell.settingsOpen = !root.shell.settingsOpen
             }
+            ToolTip.visible: settingsMouse.containsMouse
+            ToolTip.delay: 400
+            ToolTip.text: "Settings"
         }
     }
 
@@ -312,6 +354,7 @@ Item {
                     height: parent.height
                     spacing: 4
                     Loader { sourceComponent: launcherButton }
+                    Loader { sourceComponent: dashboardButton }
                     Repeater {
                         model: root.clients
                         delegate: Loader {
@@ -452,6 +495,13 @@ Item {
                                 onClicked: root.shell.clipboardPopupOpen = !root.shell.clipboardPopupOpen
                             }
                         }
+                        Text {
+                            visible: Number((root.shell.state.system || {}).batteryPercent ?? -1) >= 0
+                            text: Math.round(Number((root.shell.state.system || {}).batteryPercent || 0)) + "%"
+                            color: root.foreground
+                            font.pixelSize: 9
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
                 }
 
@@ -554,6 +604,7 @@ Item {
                         id: statusColumn
                         anchors.centerIn: parent
                         spacing: 4
+                        Loader { anchors.horizontalCenter: parent.horizontalCenter; sourceComponent: dashboardButton }
                         Loader { anchors.horizontalCenter: parent.horizontalCenter; sourceComponent: settingsButton }
                         Text {
                             visible: settings.showStatus

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "sdk": {
+    "name": "LunaDash",
+    "apiVersion": 2
+  },
+  "id": "org.lunadash.audio-wave",
+  "name": "Audio Wave",
+  "name[zh_TW]": "音訊波浪",
+  "description": "A wallpaper audio visualizer that animates only while media is playing and scales with the current desktop output volume.",
+  "description[zh_TW]": "桌布音訊視覺化插件；只有媒體實際播放時才波動，振幅會跟隨目前桌面輸出音量。",
+  "version": "1.0.1a",
+  "author": {
+    "name": "LunaDash contributors"
+  },
+  "icon": "audio-x-generic",
+  "tags": [
+    "Audio",
+    "Visualizer",
+    "Wallpaper",
+    "Desktop"
+  ],
+  "enabledByDefault": false,
+  "targets": [
+    {
+      "id": "desktop-widgets",
+      "type": "quickshell",
+      "target": "desktop-widgets",
+      "mode": "augment",
+      "entry": "Main.qml",
+      "settings": {
+        "barCount": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Bar count",
+          "default": 72,
+          "minimum": 24,
+          "maximum": 120,
+          "step": 4
+        },
+        "height": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Visualizer height",
+          "default": 210,
+          "minimum": 80,
+          "maximum": 420,
+          "step": 10
+        },
+        "bottomMargin": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Bottom margin",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 240,
+          "step": 4
+        },
+        "opacity": {
+          "type": "number",
+          "control": "slider",
+          "label": "Opacity",
+          "default": 0.78,
+          "minimum": 0.15,
+          "maximum": 1,
+          "step": 0.01
+        },
+        "sensitivity": {
+          "type": "number",
+          "control": "slider",
+          "label": "Volume sensitivity",
+          "default": 1.15,
+          "minimum": 0.4,
+          "maximum": 2,
+          "step": 0.05
+        },
+        "mirror": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Mirror wave profile",
+          "default": true
+        }
+      }
+    }
+  ]
+}
