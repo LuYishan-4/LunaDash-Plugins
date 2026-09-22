@@ -14,6 +14,6 @@ The current LunaDash catalogue parser requires every entry to have a valid uniqu
 
 Generated fields include `id`, `name`, `description`, `version`, `author`, `icon`, `type`, `target`, `mode`, `tags`, and `sourceUrl`.
 
-Extra reviewed fields such as `siteUrl`, `license`, `repository`, `settings`, screenshots, and deprecation metadata are retained for the website and future installer.
+Reviewed `installFiles` entries are emitted as HTTPS URLs plus SHA-256 hashes in `index.json`. LunaDash uses that payload for one-click installation of source-only QML packages. Other store fields such as `siteUrl`, `license`, `repository`, `settings`, screenshots, and deprecation metadata remain catalogue metadata.
 
 The runtime manifest remains `plugins/<id>/metadata.json`. The index is discovery metadata, not a replacement for package validation.

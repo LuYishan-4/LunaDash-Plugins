@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -36,6 +37,21 @@ def target_items(metadata):
         "mode": metadata.get("mode", ""),
         "settings": metadata.get("settings", {})
     }]
+
+def install_payload(folder, plugin_id, store):
+    names = store.get("installFiles", [])
+    if not names:
+        return None
+    return {
+        "files": [
+            {
+                "path": name,
+                "url": RAW.format(id=plugin_id, file=name),
+                "sha256": hashlib.sha256((folder / name).read_bytes()).hexdigest()
+            }
+            for name in names
+        ]
+    }
 
 def build():
     plugins = []
@@ -77,6 +93,9 @@ def build():
             item["screenshots"] = [
                 RAW.format(id=plugin_id, file=name) for name in store["screenshots"]
             ]
+        install = install_payload(folder, plugin_id, store)
+        if install:
+            item["install"] = install
         plugins.append(item)
     return {"schemaVersion": 1, "format": "lunadash-plugin-index", "plugins": plugins}
 

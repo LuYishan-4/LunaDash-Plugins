@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 2,
+  "sdk": {
+    "name": "LunaDash",
+    "apiVersion": 2
+  },
+  "id": "org.lunadash.digitalclock",
+  "name": "Digital Clock",
+  "name[zh_TW]": "數位時鐘",
+  "description": "A configurable desktop digital clock for LunaDash.",
+  "description[zh_TW]": "可調整位置、格式與外觀的 LunaDash 桌面數位時鐘。",
+  "version": "2.0.0",
+  "author": {
+    "name": "LuYishan"
+  },
+  "icon": "clock",
+  "tags": [
+    "Widget",
+    "Clock",
+    "Desktop"
+  ],
+  "enabledByDefault": false,
+  "targets": [
+    {
+      "id": "desktop-widgets",
+      "type": "quickshell",
+      "target": "desktop-widgets",
+      "mode": "augment",
+      "entry": "Main.qml",
+      "settings": {
+        "position": {
+          "type": "string",
+          "control": "select",
+          "label": "Position",
+          "default": "bottomRight",
+          "enum": [
+            "topLeft",
+            "topRight",
+            "bottomLeft",
+            "bottomRight"
+          ]
+        },
+        "marginX": {
+          "type": "integer",
+          "control": "number",
+          "label": "Horizontal margin",
+          "default": 34,
+          "minimum": 0,
+          "maximum": 240,
+          "step": 1
+        },
+        "marginY": {
+          "type": "integer",
+          "control": "number",
+          "label": "Vertical margin",
+          "default": 34,
+          "minimum": 0,
+          "maximum": 240,
+          "step": 1
+        },
+        "use24Hour": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Use 24-hour time",
+          "default": true
+        },
+        "showSeconds": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show seconds",
+          "default": false
+        },
+        "showDate": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show date",
+          "default": true
+        },
+        "scale": {
+          "type": "number",
+          "control": "slider",
+          "label": "Clock scale",
+          "default": 1.0,
+          "minimum": 0.7,
+          "maximum": 1.5,
+          "step": 0.05
+        },
+        "opacity": {
+          "type": "number",
+          "control": "slider",
+          "label": "Opacity",
+          "default": 1.0,
+          "minimum": 0.3,
+          "maximum": 1.0,
+          "step": 0.05
+        }
+      }
+    }
+  ]
+}

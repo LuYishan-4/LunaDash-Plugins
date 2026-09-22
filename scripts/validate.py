@@ -41,7 +41,8 @@ def validate_store(folder, manifest):
     store = load_json(folder / "store.json", 32768)
     require(store.get("storeSchemaVersion") == 1, f"{manifest['id']}: storeSchemaVersion must be 1")
     allowed = {"storeSchemaVersion", "license", "repository", "homepage", "upstream",
-               "screenshots", "featured", "deprecated", "replacement"}
+               "screenshots", "featured", "deprecated", "replacement",
+               "installFiles"}
     require(set(store) <= allowed,
             f"{manifest['id']}: unknown store.json fields: {sorted(set(store) - allowed)}")
     license_id = store.get("license")
@@ -68,6 +69,34 @@ def validate_store(folder, manifest):
     require(type(deprecated) is bool, f"{manifest['id']}: deprecated must be boolean")
     if "featured" in store:
         require(type(store["featured"]) is bool, f"{manifest['id']}: featured must be boolean")
+
+    install_files = store.get("installFiles", [])
+    require(isinstance(install_files, list) and len(install_files) <= 32 and
+            len(set(install_files)) == len(install_files),
+            f"{manifest['id']}: invalid installFiles")
+    if install_files:
+        require("metadata.json" in install_files,
+                f"{manifest['id']}: installFiles must include metadata.json")
+        implementations = manifest.get("targets")
+        if not isinstance(implementations, list):
+            implementations = [manifest]
+        require(all(item.get("type") in ("quickshell", "qml")
+                    for item in implementations),
+                f"{manifest['id']}: source-only store install currently supports QML packages")
+        entries = {"metadata.json"}
+        entries.update(item.get("entry") for item in implementations if item.get("entry"))
+        require(entries <= set(install_files),
+                f"{manifest['id']}: installFiles must include every QML entry")
+        for name in install_files:
+            require(isinstance(name, str) and len(name) <= 180 and
+                    re.fullmatch(r"(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+", name) and
+                    ".." not in name.split("/"),
+                    f"{manifest['id']}: invalid install file path {name!r}")
+            path = (folder / name).resolve()
+            require(path.is_file() and folder.resolve() in path.parents and
+                    path.stat().st_size <= 4 * 1024 * 1024,
+                    f"{manifest['id']}: missing or oversized install file {name}")
+
     if "replacement" in store:
         require(deprecated and isinstance(store["replacement"], str) and
                 re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]+", store["replacement"]),

@@ -1,0 +1,11 @@
+{
+  "storeSchemaVersion": 1,
+  "license": "GPL-3.0-or-later",
+  "repository": "https://github.com/LuYishan-4/LunaDash-Plugins",
+  "homepage": "https://luyishan-4.github.io/LunaDash-Plugins/plugins/org.lunadash.digitalclock/",
+  "featured": true,
+  "installFiles": [
+    "metadata.json",
+    "Main.qml"
+  ]
+}
