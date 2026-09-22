@@ -12,7 +12,12 @@ export function getStaticPaths() {
 const { plugin } = Astro.props;
 const item = plugin as any;
 const base = import.meta.env.BASE_URL;
-const targetEntries = (item.targets?.length ? item.targets : [{
+const targetEntries: Array<{
+  target:string;
+  type:string;
+  mode:string;
+  settings?:Record<string, unknown>;
+}> = (item.targets?.length ? item.targets : [{
   target: item.target,
   type: item.type,
   mode: item.mode,

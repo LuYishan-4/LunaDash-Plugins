@@ -43,9 +43,10 @@ const types = ["all", "quickshell", "effect", "opengl"];
     <div class="plugin-grid" id="plugin-grid">
       {plugins.map(plugin => {
         const item = plugin as any;
-        const entries = (item.targets?.length ? item.targets : [{
-          target: item.target, type: item.type, mode: item.mode
-        }]);
+        const entries: Array<{target:string; type:string; mode:string}> =
+          (item.targets?.length ? item.targets : [{
+            target: item.target, type: item.type, mode: item.mode
+          }]);
         const pluginTypes = [...new Set(entries.map(entry => entry.type))];
         const targetNames = entries.map(entry => targetMap.get(entry.target)?.name || entry.target);
         const iconIsImage = String(plugin.icon || "").startsWith("https://");
