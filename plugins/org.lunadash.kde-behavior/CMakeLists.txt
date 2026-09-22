@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(lunadash_kde_behavior VERSION 1.0.0 LANGUAGES C CXX)
+project(lunadash_kde_behavior VERSION 2.0.0 LANGUAGES C CXX)
 
 if(NOT COMMAND lunadash_add_plugin)
     find_package(LunaDashPlugin 2 CONFIG REQUIRED)

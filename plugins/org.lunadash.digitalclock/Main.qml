@@ -54,7 +54,9 @@ Item {
         exclusiveZone: 0
         exclusionMode: ExclusionMode.Ignore
         color: "transparent"
-        WlrLayershell.layer: WlrLayer.Top
+        // Render above the wallpaper but below normal application surfaces.
+        // This keeps the clock desktop-only instead of pinning it over windows.
+        WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.namespace: "lunadash-plugin-digital-clock"
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 

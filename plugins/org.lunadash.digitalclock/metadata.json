@@ -7,9 +7,9 @@
   "id": "org.lunadash.digitalclock",
   "name": "Digital Clock",
   "name[zh_TW]": "數位時鐘",
-  "description": "A configurable desktop digital clock for LunaDash.",
-  "description[zh_TW]": "可調整位置、格式與外觀的 LunaDash 桌面數位時鐘。",
-  "version": "2.0.1",
+  "description": "A configurable desktop-layer digital clock for LunaDash that stays behind application windows.",
+  "description[zh_TW]": "可調整位置、格式與外觀，且只顯示於桌面層、不覆蓋應用程式視窗的 LunaDash 數位時鐘。",
+  "version": "2.1.0",
   "author": {
     "name": "LuYishan"
   },
@@ -80,7 +80,7 @@
           "type": "number",
           "control": "slider",
           "label": "Clock scale",
-          "default": 1.0,
+          "default": 1,
           "minimum": 0.7,
           "maximum": 1.5,
           "step": 0.05
@@ -89,9 +89,9 @@
           "type": "number",
           "control": "slider",
           "label": "Opacity",
-          "default": 1.0,
+          "default": 1,
           "minimum": 0.3,
-          "maximum": 1.0,
+          "maximum": 1,
           "step": 0.05
         }
       }

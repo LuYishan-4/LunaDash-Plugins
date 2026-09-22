@@ -6,8 +6,8 @@
   },
   "id": "org.lunadash.kde-behavior",
   "name": "KDE Behavior Pack",
-  "description": "KDE-inspired taskbar, window-rule and window-animation behavior packaged as one multi-target LunaDash plugin.",
-  "version": "1.0.0",
+  "description": "KDE-inspired floating panel, freeform window layout, window rules and animations packaged as one multi-target LunaDash plugin.",
+  "version": "2.0.0",
   "author": {
     "name": "LunaDash contributors"
   },
@@ -15,6 +15,7 @@
   "tags": [
     "KDE",
     "Panel",
+    "Freeform",
     "Windows",
     "Animation",
     "Multi-target"
@@ -32,19 +33,84 @@
           "type": "boolean",
           "control": "toggle",
           "label": "Compact task buttons",
-          "default": false
+          "default": true
         },
         "showLabels": {
           "type": "boolean",
           "control": "toggle",
           "label": "Show window titles",
-          "default": true
+          "default": false
         },
         "showWorkspaceSwitcher": {
           "type": "boolean",
           "control": "toggle",
           "label": "Show workspace switcher",
           "default": true
+        },
+        "showSystemTray": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show system tray",
+          "default": true
+        },
+        "showStatus": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show status controls",
+          "default": true
+        },
+        "showClock": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show clock",
+          "default": true
+        },
+        "iconSize": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Dock icon size",
+          "default": 22,
+          "minimum": 16,
+          "maximum": 32,
+          "step": 1
+        },
+        "panelOpacity": {
+          "type": "number",
+          "control": "slider",
+          "label": "Capsule opacity",
+          "default": 0.88,
+          "minimum": 0.45,
+          "maximum": 1,
+          "step": 0.01
+        }
+      }
+    },
+    {
+      "id": "window-layout",
+      "type": "effect",
+      "target": "window-layout",
+      "mode": "replace",
+      "entry": "liblunadash-kde-behavior.so",
+      "windowTemplate": "stacking",
+      "settings": {
+        "placement": {
+          "type": "string",
+          "control": "select",
+          "label": "New window placement",
+          "default": "cascade",
+          "enum": [
+            "cascade",
+            "center"
+          ]
+        },
+        "cascadeOffset": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Cascade offset",
+          "default": 28,
+          "minimum": 0,
+          "maximum": 80,
+          "step": 1
         }
       }
     },
@@ -85,7 +151,7 @@
           "type": "integer",
           "control": "number",
           "label": "Animation duration",
-          "default": 220,
+          "default": 180,
           "minimum": 0,
           "maximum": 600,
           "step": 10
@@ -94,7 +160,7 @@
           "type": "integer",
           "control": "number",
           "label": "Opening offset",
-          "default": 8,
+          "default": 6,
           "minimum": -100,
           "maximum": 100,
           "step": 1
@@ -103,7 +169,7 @@
           "type": "number",
           "control": "slider",
           "label": "Unfocused opacity",
-          "default": 0.9,
+          "default": 0.96,
           "minimum": 0,
           "maximum": 1,
           "step": 0.01
@@ -112,7 +178,7 @@
           "type": "number",
           "control": "slider",
           "label": "Closing scale",
-          "default": 0.96,
+          "default": 0.97,
           "minimum": 0.5,
           "maximum": 1,
           "step": 0.01
