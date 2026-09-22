@@ -83,7 +83,7 @@ Item {
     Component {
         id: taskButton
         Rectangle {
-            required property var client
+            property var client: ({})
             width: root.vertical ? 36 : (settings.compact ? 38 : settings.showLabels ? 150 : 42)
             height: 32
             radius: 6
