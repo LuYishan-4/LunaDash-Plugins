@@ -169,6 +169,7 @@
       },
       "homepage": "https://luyishan-4.github.io/LunaDash-Plugins/plugins/org.lunadash.digitalclock/",
       "install": {
+        "mode": "cmake",
         "files": [
           {
             "path": "metadata.json",
@@ -319,6 +320,7 @@
       "deprecated": false,
       "homepage": "https://luyishan-4.github.io/LunaDash-Plugins/plugins/org.lunadash.kde-behavior/",
       "install": {
+        "mode": "cmake",
         "files": [
           {
             "path": "metadata.json",
