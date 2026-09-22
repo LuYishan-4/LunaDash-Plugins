@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "sdk": {
+    "name": "LunaDash",
+    "apiVersion": 2
+  },
+  "id": "org.example.plugin",
+  "name": "Example plugin",
+  "description": "Describe the plugin.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Your name"
+  },
+  "icon": "applications-system",
+  "tags": [
+    "Example"
+  ],
+  "type": "quickshell",
+  "target": "desktop-widgets",
+  "mode": "augment",
+  "entry": "Main.qml",
+  "enabledByDefault": false,
+  "settings": {
+    "showLabel": {
+      "type": "boolean",
+      "default": true,
+      "control": "toggle",
+      "label": "Show label"
+    }
+  }
+}

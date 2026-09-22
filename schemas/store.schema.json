@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://luyishan-4.github.io/LunaDash-Plugins/schemas/store.schema.json",
+  "title": "LunaDash Plugin Store Metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "storeSchemaVersion",
+    "license",
+    "repository"
+  ],
+  "properties": {
+    "storeSchemaVersion": {
+      "const": 1
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "repository": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "upstream": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "screenshots": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.-]+\\.(png|jpg|jpeg|webp)$"
+      }
+    },
+    "featured": {
+      "type": "boolean"
+    },
+    "deprecated": {
+      "type": "boolean"
+    },
+    "replacement": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]+$"
+    }
+  }
+}
