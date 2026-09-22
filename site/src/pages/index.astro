@@ -42,8 +42,9 @@ const types = ["all", "quickshell", "effect", "opengl"];
 
     <div class="plugin-grid" id="plugin-grid">
       {plugins.map(plugin => {
-        const entries = (plugin.targets?.length ? plugin.targets : [{
-          target: plugin.target, type: plugin.type, mode: plugin.mode
+        const item = plugin as any;
+        const entries = (item.targets?.length ? item.targets : [{
+          target: item.target, type: item.type, mode: item.mode
         }]);
         const pluginTypes = [...new Set(entries.map(entry => entry.type))];
         const targetNames = entries.map(entry => targetMap.get(entry.target)?.name || entry.target);

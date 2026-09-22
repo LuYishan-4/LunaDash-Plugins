@@ -10,12 +10,13 @@ export function getStaticPaths() {
 }
 
 const { plugin } = Astro.props;
+const item = plugin as any;
 const base = import.meta.env.BASE_URL;
-const targetEntries = (plugin.targets?.length ? plugin.targets : [{
-  target: plugin.target,
-  type: plugin.type,
-  mode: plugin.mode,
-  settings: plugin.settings || {}
+const targetEntries = (item.targets?.length ? item.targets : [{
+  target: item.target,
+  type: item.type,
+  mode: item.mode,
+  settings: item.settings || {}
 }]);
 const types = [...new Set(targetEntries.map(entry => entry.type))];
 const iconIsImage = String(plugin.icon || "").startsWith("https://");
