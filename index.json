@@ -3,10 +3,168 @@
   "format": "lunadash-plugin-index",
   "plugins": [
     {
+      "id": "org.lunadash.audio-wave",
+      "name": "Audio Wave",
+      "description": "A wallpaper audio visualizer that animates only while media is playing and scales with the current desktop output volume.",
+      "version": "1.0.1a",
+      "author": "LunaDash contributors",
+      "icon": "audio-x-generic",
+      "targets": [
+        {
+          "id": "desktop-widgets",
+          "target": "desktop-widgets",
+          "type": "quickshell",
+          "mode": "augment",
+          "settings": {
+            "barCount": {
+              "type": "integer",
+              "control": "slider",
+              "label": "Bar count",
+              "default": 72,
+              "minimum": 24,
+              "maximum": 120,
+              "step": 4
+            },
+            "height": {
+              "type": "integer",
+              "control": "slider",
+              "label": "Visualizer height",
+              "default": 210,
+              "minimum": 80,
+              "maximum": 420,
+              "step": 10
+            },
+            "bottomMargin": {
+              "type": "integer",
+              "control": "slider",
+              "label": "Bottom margin",
+              "default": 0,
+              "minimum": 0,
+              "maximum": 240,
+              "step": 4
+            },
+            "opacity": {
+              "type": "number",
+              "control": "slider",
+              "label": "Opacity",
+              "default": 0.78,
+              "minimum": 0.15,
+              "maximum": 1,
+              "step": 0.01
+            },
+            "sensitivity": {
+              "type": "number",
+              "control": "slider",
+              "label": "Volume sensitivity",
+              "default": 1.15,
+              "minimum": 0.4,
+              "maximum": 2,
+              "step": 0.05
+            },
+            "mirror": {
+              "type": "boolean",
+              "control": "toggle",
+              "label": "Mirror wave profile",
+              "default": true
+            }
+          }
+        }
+      ],
+      "tags": [
+        "Audio",
+        "Visualizer",
+        "Wallpaper",
+        "Desktop"
+      ],
+      "sourceUrl": "https://github.com/LuYishan-4/LunaDash-Plugins/tree/main/plugins/org.lunadash.audio-wave",
+      "siteUrl": "https://luyishan-4.github.io/LunaDash-Plugins/plugins/org.lunadash.audio-wave/",
+      "license": "GPL-3.0-or-later",
+      "repository": "https://github.com/LuYishan-4/LunaDash-Plugins",
+      "featured": true,
+      "deprecated": false,
+      "type": "quickshell",
+      "target": "desktop-widgets",
+      "mode": "augment",
+      "settings": {
+        "barCount": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Bar count",
+          "default": 72,
+          "minimum": 24,
+          "maximum": 120,
+          "step": 4
+        },
+        "height": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Visualizer height",
+          "default": 210,
+          "minimum": 80,
+          "maximum": 420,
+          "step": 10
+        },
+        "bottomMargin": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Bottom margin",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 240,
+          "step": 4
+        },
+        "opacity": {
+          "type": "number",
+          "control": "slider",
+          "label": "Opacity",
+          "default": 0.78,
+          "minimum": 0.15,
+          "maximum": 1,
+          "step": 0.01
+        },
+        "sensitivity": {
+          "type": "number",
+          "control": "slider",
+          "label": "Volume sensitivity",
+          "default": 1.15,
+          "minimum": 0.4,
+          "maximum": 2,
+          "step": 0.05
+        },
+        "mirror": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Mirror wave profile",
+          "default": true
+        }
+      },
+      "homepage": "https://luyishan-4.github.io/LunaDash-Plugins/plugins/org.lunadash.audio-wave/",
+      "install": {
+        "mode": "cmake",
+        "files": [
+          {
+            "path": "metadata.json",
+            "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.audio-wave/metadata.json",
+            "sha256": "d079a3f7eb9c71593348f42496358849ae28f6af6e91cb207a67b9e92d5b5693"
+          },
+          {
+            "path": "CMakeLists.txt",
+            "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.audio-wave/CMakeLists.txt",
+            "sha256": "ea05b0de1e3c4906cce499c489950617f528216fb4f61a231c1e33fdbbab92e3"
+          },
+          {
+            "path": "Main.qml",
+            "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.audio-wave/Main.qml",
+            "sha256": "31eb7255084055ee36f23df0415f8e58853f287533591e891fbe81fc57d5cbc9"
+          }
+        ]
+      }
+    },
+    {
       "id": "org.lunadash.digitalclock",
       "name": "Digital Clock",
-      "description": "A configurable desktop-layer digital clock for LunaDash that stays behind application windows.",
-      "version": "2.1.0",
+      "description": "A wallpaper-layer digital clock embedded inside LunaDash desktop widgets so application windows always cover it.",
+      "version": "1.0.1a",
       "author": "LuYishan",
       "icon": "clock",
       "targets": [
@@ -174,17 +332,17 @@
           {
             "path": "metadata.json",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.digitalclock/metadata.json",
-            "sha256": "22184d23cfce6c3499fbdf06aa38fcfd2394ac0dafdf4a8b86ac172a0953e097"
+            "sha256": "01a08eeeb7f6a638b2e3ca57e806fc491c6bd1cb9d7539e10d71e7c5fd558ded"
           },
           {
             "path": "CMakeLists.txt",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.digitalclock/CMakeLists.txt",
-            "sha256": "a52094a85ad4e4baeb1da7797ec45705ab8c1932afd457da3f91b9cfe4fc15ab"
+            "sha256": "80b05144c8e7db70f06550aebaf48e8721072718f3268bbdeb52b79cfd36466b"
           },
           {
             "path": "Main.qml",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.digitalclock/Main.qml",
-            "sha256": "e8a7811cac7024e7c6eb6f6d86a1181147cb6d99a42914e87fe2f406bd14aafe"
+            "sha256": "6c21cdd862f6bb9d2a9498a70a7b5d7f4cc7356e16677fae4c61bac58c58cfd9"
           }
         ]
       }
@@ -192,8 +350,8 @@
     {
       "id": "org.lunadash.kde-behavior",
       "name": "KDE Behavior Pack",
-      "description": "KDE-inspired floating panel, freeform window layout, window rules and animations packaged as one multi-target LunaDash plugin.",
-      "version": "2.0.0",
+      "description": "KDE-inspired floating capsules, freeform windows, dashboard access, system status, window rules and animations for LunaDash.",
+      "version": "1.0.1a",
       "author": "LunaDash contributors",
       "icon": "preferences-desktop",
       "targets": [
@@ -256,6 +414,12 @@
               "minimum": 0.45,
               "maximum": 1,
               "step": 0.01
+            },
+            "showDashboard": {
+              "type": "boolean",
+              "control": "toggle",
+              "label": "Show dashboard button",
+              "default": true
             }
           }
         },
@@ -389,12 +553,12 @@
           {
             "path": "metadata.json",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.kde-behavior/metadata.json",
-            "sha256": "a915e58e7ef821c47556584314ef8eea23dcebc1c88c1a35d3461685f5887500"
+            "sha256": "424c8a9ec421942e738a25f86742e5f7fea302d85cd35fe8a4d499808fbefd26"
           },
           {
             "path": "CMakeLists.txt",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.kde-behavior/CMakeLists.txt",
-            "sha256": "688a2fa689a509370325de4bc79b8c47a1aa98cbd240bd3095f349f6490a43ef"
+            "sha256": "f3c29207847782189f8dc382dab8ecac10789d2792853165becf13cbc419dfc0"
           },
           {
             "path": "Effect.cpp",
@@ -404,7 +568,7 @@
           {
             "path": "KdePanel.qml",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.kde-behavior/KdePanel.qml",
-            "sha256": "46c1ed5eb7663a5666c7507c964f4139ce4826a5dfc81353b6e3fa80d48d5279"
+            "sha256": "c6c95374466799161ff1d6724dbacfb715e72d26dd264dc4983a99080ab0ea53"
           }
         ]
       }
