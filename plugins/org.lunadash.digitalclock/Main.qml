@@ -8,8 +8,9 @@ Item {
     required property var shell
     required property var settings
     required property var context
-    width: 0
-    height: 0
+    width: 1
+    height: 1
+    property bool pluginReady: true
 
     readonly property var appearance: shell ? (shell.state.appearance || {}) : ({})
     readonly property color accent: appearance.accent || "#9ccbfb"
@@ -38,6 +39,8 @@ Item {
     }
 
     PanelWindow {
+        id: clockWindow
+        visible: true
         anchors.left: plugin.atLeft
         anchors.right: !plugin.atLeft
         anchors.top: plugin.atTop
@@ -49,8 +52,9 @@ Item {
         implicitWidth: Math.round(405 * plugin.clockScale)
         implicitHeight: Math.round((plugin.showDate ? 112 : 88) * plugin.clockScale)
         exclusiveZone: 0
+        exclusionMode: ExclusionMode.Ignore
         color: "transparent"
-        WlrLayershell.layer: WlrLayer.Bottom
+        WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "lunadash-plugin-digital-clock"
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 

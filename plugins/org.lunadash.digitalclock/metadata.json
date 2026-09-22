@@ -9,7 +9,7 @@
   "name[zh_TW]": "數位時鐘",
   "description": "A configurable desktop digital clock for LunaDash.",
   "description[zh_TW]": "可調整位置、格式與外觀的 LunaDash 桌面數位時鐘。",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": {
     "name": "LuYishan"
   },
