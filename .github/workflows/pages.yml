@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      pages_enabled: ${{ steps.pages.outcome == 'success' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -32,14 +34,20 @@ jobs:
       - name: Build
         working-directory: site
         run: npm run build
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - name: Configure Pages when enabled
+        id: pages
+        continue-on-error: true
+        uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
+        if: steps.pages.outcome == 'success'
         with:
           path: site/dist
+      - name: Pages not enabled
+        if: steps.pages.outcome != 'success'
+        run: echo "Site build passed; enable GitHub Pages with GitHub Actions in repository settings to publish it."
 
   deploy:
+    if: needs.build.outputs.pages_enabled == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
