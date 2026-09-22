@@ -10,9 +10,14 @@ export function getStaticPaths() {
 }
 
 const { plugin } = Astro.props;
-const target = targetMap.get(plugin.target);
 const base = import.meta.env.BASE_URL;
-const settings = Object.entries(plugin.settings || {});
+const targetEntries = (plugin.targets?.length ? plugin.targets : [{
+  target: plugin.target,
+  type: plugin.type,
+  mode: plugin.mode,
+  settings: plugin.settings || {}
+}]);
+const types = [...new Set(targetEntries.map(entry => entry.type))];
 const iconIsImage = String(plugin.icon || "").startsWith("https://");
 ---
 <Base title={plugin.name} description={plugin.description}>
@@ -24,7 +29,7 @@ const iconIsImage = String(plugin.icon || "").startsWith("https://");
       </div>
       <div class="detail-title">
         <div class="badges">
-          <span class:list={["badge", plugin.type]}>{plugin.type}</span>
+          {types.map(type => <span class:list={["badge", type]}>{type}</span>)}
           {plugin.featured && <span class="badge featured">featured</span>}
           {plugin.deprecated && <span class="badge danger">deprecated</span>}
         </div>
@@ -40,8 +45,7 @@ const iconIsImage = String(plugin.icon || "").startsWith("https://");
           <div><dt>ID</dt><dd><code>{plugin.id}</code></dd></div>
           <div><dt>Version</dt><dd>{plugin.version}</dd></div>
           <div><dt>Author</dt><dd>{plugin.author || "Unknown"}</dd></div>
-          <div><dt>Target</dt><dd>{target?.name || plugin.target} <code>{plugin.target}</code></dd></div>
-          <div><dt>Mode</dt><dd>{plugin.mode}</dd></div>
+          <div><dt>Targets</dt><dd>{targetEntries.length}</dd></div>
           <div><dt>License</dt><dd>{plugin.license}</dd></div>
         </dl>
         <div class="hero-actions">
@@ -51,36 +55,60 @@ const iconIsImage = String(plugin.icon || "").startsWith("https://");
       </article>
 
       <article class="panel">
-        <h2>Settings schema</h2>
-        {settings.length ? (
-          <div class="setting-list">
-            {settings.map(([key, raw]) => {
-              const rule = raw as Record<string, any>;
-              const inferred = rule.control ||
-                (rule.enum ? "select" :
-                 rule.type === "boolean" ? "toggle" :
-                 (rule.type === "integer" || rule.type === "number") &&
-                   "minimum" in rule && "maximum" in rule ? "slider" :
-                 rule.type === "string" ? "text" : "number");
-              return (
-                <div class="setting-row">
-                  <div><strong>{rule.label || key}</strong><code>{key}</code></div>
-                  <span>{inferred}</span>
+        <h2>Target implementations</h2>
+        <div class="setting-list">
+          {targetEntries.map(entry => {
+            const target = targetMap.get(entry.target);
+            return (
+              <div class="setting-row">
+                <div>
+                  <strong>{target?.name || entry.target}</strong>
+                  <code>{entry.target}</code>
                 </div>
-              );
-            })}
-          </div>
-        ) : <p class="muted">This plugin does not expose configurable options.</p>}
+                <span>{entry.type} · {entry.mode}</span>
+              </div>
+            );
+          })}
+        </div>
       </article>
     </div>
 
+    {targetEntries.map(entry => {
+      const settings = Object.entries(entry.settings || {});
+      const target = targetMap.get(entry.target);
+      return (
+        <article class="panel">
+          <h2>{target?.name || entry.target} settings</h2>
+          {settings.length ? (
+            <div class="setting-list">
+              {settings.map(([key, raw]) => {
+                const rule = raw as Record<string, any>;
+                const inferred = rule.control ||
+                  (rule.enum ? "select" :
+                   rule.type === "boolean" ? "toggle" :
+                   (rule.type === "integer" || rule.type === "number") &&
+                     "minimum" in rule && "maximum" in rule ? "slider" :
+                   rule.type === "string" ? "text" : "number");
+                return (
+                  <div class="setting-row">
+                    <div><strong>{rule.label || key}</strong><code>{key}</code></div>
+                    <span>{inferred}</span>
+                  </div>
+                );
+              })}
+            </div>
+          ) : <p class="muted">This target does not expose configurable options.</p>}
+        </article>
+      );
+    })}
+
     <article class="panel security-note">
       <h2>Trust boundary</h2>
-      <p>{plugin.type === "effect"
-        ? "This is native compositor code. LunaDash requires native effects to default to disabled; inspect the source before enabling it."
-        : plugin.type === "opengl"
-          ? "This plugin runs shader code in a supported Qt Quick visual slot. Software rendering keeps the built-in feature."
-          : "This Quickshell plugin executes as your desktop user. Registry validation checks its package contract but does not sandbox the code."}</p>
+      <p>{types.includes("effect")
+        ? "This package contains native compositor code. LunaDash requires native packages to default to disabled; inspect the source before enabling it."
+        : types.includes("opengl")
+          ? "This package runs shader code in supported visual slots. Software rendering keeps the built-in feature."
+          : "This Quickshell package executes as your desktop user. Registry validation checks its package contract but does not sandbox the code."}</p>
     </article>
   </section>
 </Base>

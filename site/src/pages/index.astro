@@ -9,7 +9,7 @@ const types = ["all", "quickshell", "effect", "opengl"];
     <div>
       <span class="eyebrow">LunaDash Plugin SDK 2</span>
       <h1>Extend the desktop,<br /><span>without forking it.</span></h1>
-      <p>Browse community extensions for LunaDash. Every listing comes through the registry PR gate and is checked against LunaDash's own target and settings contracts.</p>
+      <p>Browse community extensions for LunaDash. A package can own multiple targets, and every target is checked against LunaDash's runtime contract.</p>
       <div class="hero-actions">
         <a class="button primary" href={base + "submit/"}>Submit a plugin</a>
         <a class="button" href="https://github.com/LuYishan-4/LunaDash-Plugins/blob/main/CONTRIBUTING.md">Read the rules</a>
@@ -42,28 +42,33 @@ const types = ["all", "quickshell", "effect", "opengl"];
 
     <div class="plugin-grid" id="plugin-grid">
       {plugins.map(plugin => {
-        const target = targetMap.get(plugin.target);
+        const entries = (plugin.targets?.length ? plugin.targets : [{
+          target: plugin.target, type: plugin.type, mode: plugin.mode
+        }]);
+        const pluginTypes = [...new Set(entries.map(entry => entry.type))];
+        const targetNames = entries.map(entry => targetMap.get(entry.target)?.name || entry.target);
         const iconIsImage = String(plugin.icon || "").startsWith("https://");
         const search = [
           plugin.name, plugin.id, plugin.description, plugin.author,
-          plugin.type, plugin.target, ...(plugin.tags || [])
+          ...pluginTypes, ...targetNames, ...entries.map(entry => entry.target),
+          ...(plugin.tags || [])
         ].join(" ").toLowerCase();
         return (
-          <article class="plugin-card" data-type={plugin.type} data-search={search}>
+          <article class="plugin-card" data-types={pluginTypes.join(" ")} data-search={search}>
             <a class="card-link" href={base + "plugins/" + plugin.id + "/"} aria-label={"Open " + plugin.name}></a>
             <div class="card-top">
               <div class="plugin-icon">
                 {iconIsImage ? <img src={plugin.icon} alt="" loading="lazy" /> : <span>{plugin.name.slice(0, 1).toUpperCase()}</span>}
               </div>
               <div class="badges">
-                <span class:list={["badge", plugin.type]}>{plugin.type}</span>
+                {pluginTypes.map(type => <span class:list={["badge", type]}>{type}</span>)}
                 {plugin.featured && <span class="badge featured">featured</span>}
               </div>
             </div>
             <h3>{plugin.name}</h3>
             <p>{plugin.description}</p>
             <div class="meta">
-              <span>{target?.name || plugin.target}</span>
+              <span>{entries.length === 1 ? targetNames[0] : entries.length + " targets"}</span>
               <span>v{plugin.version}</span>
             </div>
             <div class="tags">
@@ -93,7 +98,7 @@ const types = ["all", "quickshell", "effect", "opengl"];
       const query = (search?.value || "").trim().toLowerCase();
       let shown = 0;
       for (const card of cards) {
-        const typeOk = type === "all" || card.dataset.type === type;
+        const typeOk = type === "all" || (card.dataset.types || "").split(" ").includes(type);
         const textOk = !query || (card.dataset.search || "").includes(query);
         card.hidden = !(typeOk && textOk);
         if (!card.hidden) shown++;
