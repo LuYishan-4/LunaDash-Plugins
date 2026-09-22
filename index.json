@@ -5,8 +5,8 @@
     {
       "id": "org.lunadash.digitalclock",
       "name": "Digital Clock",
-      "description": "A configurable desktop digital clock for LunaDash.",
-      "version": "2.0.1",
+      "description": "A configurable desktop-layer digital clock for LunaDash that stays behind application windows.",
+      "version": "2.1.0",
       "author": "LuYishan",
       "icon": "clock",
       "targets": [
@@ -68,7 +68,7 @@
               "type": "number",
               "control": "slider",
               "label": "Clock scale",
-              "default": 1.0,
+              "default": 1,
               "minimum": 0.7,
               "maximum": 1.5,
               "step": 0.05
@@ -77,9 +77,9 @@
               "type": "number",
               "control": "slider",
               "label": "Opacity",
-              "default": 1.0,
+              "default": 1,
               "minimum": 0.3,
-              "maximum": 1.0,
+              "maximum": 1,
               "step": 0.05
             }
           }
@@ -152,7 +152,7 @@
           "type": "number",
           "control": "slider",
           "label": "Clock scale",
-          "default": 1.0,
+          "default": 1,
           "minimum": 0.7,
           "maximum": 1.5,
           "step": 0.05
@@ -161,9 +161,9 @@
           "type": "number",
           "control": "slider",
           "label": "Opacity",
-          "default": 1.0,
+          "default": 1,
           "minimum": 0.3,
-          "maximum": 1.0,
+          "maximum": 1,
           "step": 0.05
         }
       },
@@ -174,17 +174,17 @@
           {
             "path": "metadata.json",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.digitalclock/metadata.json",
-            "sha256": "446987b35aaf9e4946cb93a7aaa2b224e06c9b40a7702391d4eac8decf32f350"
+            "sha256": "22184d23cfce6c3499fbdf06aa38fcfd2394ac0dafdf4a8b86ac172a0953e097"
           },
           {
             "path": "CMakeLists.txt",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.digitalclock/CMakeLists.txt",
-            "sha256": "513d66b74a9b2675140b04d6774328f1045da0eebab0242ee95d55e55f43eea6"
+            "sha256": "a52094a85ad4e4baeb1da7797ec45705ab8c1932afd457da3f91b9cfe4fc15ab"
           },
           {
             "path": "Main.qml",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.digitalclock/Main.qml",
-            "sha256": "ea9b0a92f893e469d9403c4ffbcdcfb8f2d9bf197d8b27dd2ffd71d755d5338c"
+            "sha256": "e8a7811cac7024e7c6eb6f6d86a1181147cb6d99a42914e87fe2f406bd14aafe"
           }
         ]
       }
@@ -192,8 +192,8 @@
     {
       "id": "org.lunadash.kde-behavior",
       "name": "KDE Behavior Pack",
-      "description": "KDE-inspired taskbar, window-rule and window-animation behavior packaged as one multi-target LunaDash plugin.",
-      "version": "1.0.0",
+      "description": "KDE-inspired floating panel, freeform window layout, window rules and animations packaged as one multi-target LunaDash plugin.",
+      "version": "2.0.0",
       "author": "LunaDash contributors",
       "icon": "preferences-desktop",
       "targets": [
@@ -207,19 +207,82 @@
               "type": "boolean",
               "control": "toggle",
               "label": "Compact task buttons",
-              "default": false
+              "default": true
             },
             "showLabels": {
               "type": "boolean",
               "control": "toggle",
               "label": "Show window titles",
-              "default": true
+              "default": false
             },
             "showWorkspaceSwitcher": {
               "type": "boolean",
               "control": "toggle",
               "label": "Show workspace switcher",
               "default": true
+            },
+            "showSystemTray": {
+              "type": "boolean",
+              "control": "toggle",
+              "label": "Show system tray",
+              "default": true
+            },
+            "showStatus": {
+              "type": "boolean",
+              "control": "toggle",
+              "label": "Show status controls",
+              "default": true
+            },
+            "showClock": {
+              "type": "boolean",
+              "control": "toggle",
+              "label": "Show clock",
+              "default": true
+            },
+            "iconSize": {
+              "type": "integer",
+              "control": "slider",
+              "label": "Dock icon size",
+              "default": 22,
+              "minimum": 16,
+              "maximum": 32,
+              "step": 1
+            },
+            "panelOpacity": {
+              "type": "number",
+              "control": "slider",
+              "label": "Capsule opacity",
+              "default": 0.88,
+              "minimum": 0.45,
+              "maximum": 1,
+              "step": 0.01
+            }
+          }
+        },
+        {
+          "id": "window-layout",
+          "target": "window-layout",
+          "type": "effect",
+          "mode": "replace",
+          "settings": {
+            "placement": {
+              "type": "string",
+              "control": "select",
+              "label": "New window placement",
+              "default": "cascade",
+              "enum": [
+                "cascade",
+                "center"
+              ]
+            },
+            "cascadeOffset": {
+              "type": "integer",
+              "control": "slider",
+              "label": "Cascade offset",
+              "default": 28,
+              "minimum": 0,
+              "maximum": 80,
+              "step": 1
             }
           }
         },
@@ -258,7 +321,7 @@
               "type": "integer",
               "control": "number",
               "label": "Animation duration",
-              "default": 220,
+              "default": 180,
               "minimum": 0,
               "maximum": 600,
               "step": 10
@@ -267,7 +330,7 @@
               "type": "integer",
               "control": "number",
               "label": "Opening offset",
-              "default": 8,
+              "default": 6,
               "minimum": -100,
               "maximum": 100,
               "step": 1
@@ -276,7 +339,7 @@
               "type": "number",
               "control": "slider",
               "label": "Unfocused opacity",
-              "default": 0.9,
+              "default": 0.96,
               "minimum": 0,
               "maximum": 1,
               "step": 0.01
@@ -285,7 +348,7 @@
               "type": "number",
               "control": "slider",
               "label": "Closing scale",
-              "default": 0.96,
+              "default": 0.97,
               "minimum": 0.5,
               "maximum": 1,
               "step": 0.01
@@ -308,6 +371,7 @@
       "tags": [
         "KDE",
         "Panel",
+        "Freeform",
         "Windows",
         "Animation",
         "Multi-target"
@@ -325,22 +389,22 @@
           {
             "path": "metadata.json",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.kde-behavior/metadata.json",
-            "sha256": "f44b895c0a3d91a23e0403e037d8822359de80b9aec3bdef6596f9c2d13a259a"
+            "sha256": "a915e58e7ef821c47556584314ef8eea23dcebc1c88c1a35d3461685f5887500"
           },
           {
             "path": "CMakeLists.txt",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.kde-behavior/CMakeLists.txt",
-            "sha256": "46d7f4c6423d8a06b18b4d6fa8da43bd1c6d595443046ce3453731fbbf7720b7"
+            "sha256": "688a2fa689a509370325de4bc79b8c47a1aa98cbd240bd3095f349f6490a43ef"
           },
           {
             "path": "Effect.cpp",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.kde-behavior/Effect.cpp",
-            "sha256": "4f45ce7b4f377d72e16c26a2aa91d7fffa30e111953a92ef5d674bcd209a1e2e"
+            "sha256": "5e9f966058b0e10abda5babab7b23cbef1a3aa288496d2576672c47ee0b9a71d"
           },
           {
             "path": "KdePanel.qml",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.kde-behavior/KdePanel.qml",
-            "sha256": "c28a71593926e0917bd4d03be018a9914e64862af88b235d53d14a3b2649bb95"
+            "sha256": "46c1ed5eb7663a5666c7507c964f4139ce4826a5dfc81353b6e3fa80d48d5279"
           }
         ]
       }
