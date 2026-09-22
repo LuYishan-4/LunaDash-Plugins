@@ -1,6 +1,6 @@
 # LunaDash Community Plugins
 
-This repository is the submission gate, registry, and browser website for LunaDash Plugin SDK 2.
+This repository is the submission gate, registry, and browser website for LunaDash Plugin SDK 2.\n\nCatalogue: https://luyishan-4.github.io/LunaDash-Plugins/
 
 Every community plugin lives under `plugins/<id>/` and enters the registry through a pull request. Validation is based on the same SDK 2 contracts used by LunaDash: the target registry, manifest validator, and settings-schema validator are synchronized from `LuYishan-4/LunaDash` branch `fix/plugin`.
 
