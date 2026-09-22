@@ -15,7 +15,10 @@ Item {
     property real spectrumPeak: 0.35
     property real measuredRms: 0
 
-    readonly property int bars: Math.max(24, Math.min(144, Number(settings.barCount ?? 88)))
+    readonly property bool edgeFocused: Boolean(settings.edgeFocused ?? true)
+    readonly property int sideBars: Math.max(8, Math.min(48, Number(settings.sideBars ?? 24)))
+    readonly property real centerGap: Math.max(0.15, Math.min(0.7, Number(settings.centerGap ?? 0.4)))
+    readonly property int bars: edgeFocused ? sideBars * 2 : Math.max(24, Math.min(144, Number(settings.barCount ?? 88)))
     readonly property real gain: Math.max(0.4, Math.min(6, Number(settings.sensitivity ?? 2.4)))
     readonly property real amplitudeScale: Math.max(0.5, Math.min(3, Number(settings.amplitudeScale ?? 1.8)))
     readonly property bool normalize: Boolean(settings.autoGain ?? true)
@@ -54,7 +57,10 @@ Item {
         const next = []
         for (let i = 0; i < bars; ++i) {
             const position = (i + 0.5) / bars
-            const frequency = (settings.mirror ?? true) ? Math.abs(position * 2 - 1) : position
+            // Bass lives at both outer edges. Higher bands taper toward the
+            // clear center so strong beats do not obscure the desktop.
+            const sidePosition = i < sideBars ? i / (sideBars - 1) : (bars - 1 - i) / (sideBars - 1)
+            const frequency = edgeFocused ? sidePosition : ((settings.mirror ?? true) ? Math.abs(position * 2 - 1) : position)
             const sample = frequency * 31
             const low = Math.floor(sample)
             const fraction = sample - low
@@ -63,7 +69,8 @@ Item {
             // Retain the difference between bands instead of clipping most
             // of a logarithmic spectrum at 1 when sensitivity is above 1.
             const driven = Math.pow(amplitude * normalization, 1.25) * gain / 2.4
-            const target = Math.min(1, driven)
+            const edgeWeight = edgeFocused ? 1 - 0.72 * Math.pow(sidePosition, 1.8) : 1
+            const target = Math.min(1, driven) * edgeWeight
             const previous = levels[i] || 0
             const blend = 1 - Math.exp(-dt / (target > previous ? 0.022 : 0.14))
             next.push(previous + (target - previous) * blend)
@@ -124,9 +131,14 @@ Item {
             delegate: Rectangle {
                 required property int index
                 readonly property real level: root.levels[index] || 0
-                readonly property real gap: Math.max(1, Number(root.settings.barSpacing ?? 3))
-                width: Math.max(1, (wave.width - (root.bars - 1) * gap) / root.bars)
-                x: index * (width + gap)
+                readonly property real laneWidth: root.edgeFocused ? wave.width * (1 - root.centerGap) / 2 : wave.width
+                readonly property int laneBars: root.edgeFocused ? root.sideBars : root.bars
+                readonly property real gap: Math.min(laneWidth / (laneBars * 2), Math.max(1,
+                    Number(root.edgeFocused ? (root.settings.sideSpacing ?? 10) : (root.settings.barSpacing ?? 3))))
+                width: Math.max(1, (laneWidth - (laneBars - 1) * gap) / laneBars)
+                x: root.edgeFocused && index >= root.sideBars
+                    ? wave.width - laneWidth + (index - root.sideBars) * (width + gap)
+                    : index * (width + gap)
                 anchors.bottom: parent.bottom
                 height: Math.max(2, wave.height * level)
                 radius: Math.min(5, width / 2)

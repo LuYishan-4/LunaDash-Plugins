@@ -7,8 +7,8 @@
   "id": "org.lunadash.audio-wave",
   "name": "Audio Wave",
   "name[zh_TW]": "音訊波浪",
-  "description": "Large desktop-output spectrum with adaptive gain, distinct frequency peaks and frame-synchronized motion. Requires the LunaDash audio-spectrum helper and parec.",
-  "description[zh_TW]": "大幅度桌面播放頻譜，具自動增益、明顯頻帶起伏與逐幀平滑動態。需要 LunaDash audio-spectrum helper 與 parec。",
+  "description": "Live desktop-output spectrum concentrated at the outer edges, with a clear center, sparse bars, adaptive gain and smooth motion.",
+  "description[zh_TW]": "真實桌面播放頻譜集中左右兩側，中央留白、較疏長條，搭配自動增益與平滑動態。",
   "version": "1.0.1a",
   "author": {
     "name": "LunaDash contributors"
@@ -32,7 +32,7 @@
         "barCount": {
           "type": "integer",
           "control": "slider",
-          "label": "Bar count",
+          "label": "Bar count (full width)",
           "default": 88,
           "minimum": 24,
           "maximum": 144,
@@ -98,10 +98,43 @@
         "barSpacing": {
           "type": "integer",
           "control": "slider",
-          "label": "Bar spacing",
+          "label": "Bar spacing (full width)",
           "default": 3,
           "minimum": 1,
           "maximum": 10,
+          "step": 1
+        },
+        "edgeFocused": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Keep the center clear",
+          "default": true
+        },
+        "sideBars": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Bars on each side",
+          "default": 24,
+          "minimum": 8,
+          "maximum": 48,
+          "step": 2
+        },
+        "centerGap": {
+          "type": "number",
+          "control": "slider",
+          "label": "Clear center width",
+          "default": 0.4,
+          "minimum": 0.15,
+          "maximum": 0.7,
+          "step": 0.05
+        },
+        "sideSpacing": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Side bar spacing",
+          "default": 10,
+          "minimum": 4,
+          "maximum": 24,
           "step": 1
         }
       }

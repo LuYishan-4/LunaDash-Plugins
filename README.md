@@ -56,3 +56,7 @@ Audio Wave 1.0.1a requires the LunaDash `audio-spectrum` shell helper and `parec
 Audio Wave now has a separate **Wave amplitude** multiplier (default 1.8×, up to 3×), which applies even when upgrading with an older saved height. Adaptive peak normalization makes quiet playback visible while retaining distinct frequency peaks; a PCM noise gate keeps silence at baseline. Attack/release is 22/140 ms, with configurable spacing and gain. The multiplier changes display height without inventing audio activity.
 
 新版增加獨立振幅倍率（預設 1.8 倍、最高 3 倍），保留舊設定更新也會生效。自動峰值正規化讓小聲音訊更明顯，保留各頻帶高低差，搭配 PCM 靜音門檻與 22/140 ms 逐幀平滑；可另外調整間距及增益。
+
+Audio Wave defaults to two side groups: **24 bars per side**, **10 px spacing** and a **40% clear center**. Bass is mapped to the outer edges and the higher bands taper inward. These are new settings, so upgrades with an older 88-bar configuration also adopt the side layout. Turn off **Keep the center clear** to use the previous full-width bar count, spacing and mirror controls.
+
+預設改成左右各 24 根、間隔 10 px，中央 40% 留白。低頻與主要起伏集中螢幕兩側，向中央逐漸降低；舊的 88 根設定更新後也會套用兩側配置。關閉「Keep the center clear」可恢復整排模式。
