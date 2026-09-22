@@ -17,7 +17,7 @@ The directory name must exactly match `metadata.json:id`.
 
 ## Runtime manifest
 
-`metadata.json` is a LunaDash Plugin SDK 2 manifest:
+`metadata.json` is a LunaDash Plugin SDK 2 manifest. A package may use the legacy single-target fields or a `targets` array. Target settings are configured independently at runtime:
 
 ```json
 {
@@ -25,17 +25,26 @@ The directory name must exactly match `metadata.json:id`.
   "sdk": {"name": "LunaDash", "apiVersion": 2},
   "id": "org.example.plugin",
   "name": "Example plugin",
-  "description": "What the plugin does.",
   "version": "1.0.0",
-  "author": {"name": "Your name"},
-  "icon": "applications-system",
-  "type": "quickshell",
-  "target": "desktop-widgets",
-  "mode": "augment",
-  "entry": "Main.qml",
   "enabledByDefault": false,
-  "tags": ["Widget"],
-  "settings": {}
+  "targets": [
+    {
+      "id": "panel",
+      "type": "quickshell",
+      "target": "panel",
+      "mode": "replace",
+      "entry": "Panel.qml",
+      "settings": {}
+    },
+    {
+      "id": "window-animation",
+      "type": "effect",
+      "target": "window-animation",
+      "mode": "replace",
+      "entry": "libexample.so",
+      "settings": {}
+    }
+  ]
 }
 ```
 

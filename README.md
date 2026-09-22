@@ -2,7 +2,7 @@
 
 This repository is the submission gate, registry, and browser website for LunaDash Plugin SDK 2.\n\nCatalogue: https://luyishan-4.github.io/LunaDash-Plugins/
 
-Every community plugin lives under `plugins/<id>/` and enters the registry through a pull request. Validation is based on the same SDK 2 contracts used by LunaDash: the target registry, manifest validator, and settings-schema validator are synchronized from `LuYishan-4/LunaDash` branch `fix/plugin`.
+Every community plugin lives under `plugins/<id>/` and enters the registry through a pull request. Validation is based on the same SDK 2 contracts used by LunaDash: the target registry, manifest validator, and settings-schema validator are synchronized from `LuYishan-4/LunaDash` branch `fix/Compositor/pluginCi`.
 
 The repository follows the publishing model of `caelestia-kde-plugins`—one plugin per directory, generated index, CI, and maintainer review—but the plugin format itself is LunaDash's.
 
@@ -21,7 +21,7 @@ author -> plugins/<id>/ -> pull request -> SDK validation + review
 | `effect` | C11/C++20 native synchronous SDK hooks |
 | `opengl` | GLSL packages hosted by supported visual targets |
 
-Each plugin also declares a LunaDash `target`. The authoritative target/type combinations are in `contracts/targets.json`.
+Each package declares one target or a `targets` array. Multi-target packages may combine QML, native effects, and OpenGL implementations; each target keeps its own type, mode, entry, and settings. The authoritative target/type combinations and single-owner policy are in `contracts/targets.json`.
 
 ## Repository layout
 

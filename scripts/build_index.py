@@ -16,6 +16,27 @@ def author_name(value):
         return str(value.get("name", ""))
     return str(value or "")
 
+def target_items(metadata):
+    values = metadata.get("targets")
+    if isinstance(values, list):
+        return [
+            {
+                "id": item.get("id", item.get("target", "")),
+                "target": item.get("target", item.get("id", "")),
+                "type": item.get("type", ""),
+                "mode": item.get("mode", ""),
+                "settings": item.get("settings", {})
+            }
+            for item in values
+        ]
+    return [{
+        "id": metadata.get("target", ""),
+        "target": metadata.get("target", ""),
+        "type": metadata.get("type", ""),
+        "mode": metadata.get("mode", ""),
+        "settings": metadata.get("settings", {})
+    }]
+
 def build():
     plugins = []
     for folder in sorted(p for p in PLUGINS.iterdir() if p.is_dir()):
@@ -25,6 +46,7 @@ def build():
         icon = metadata.get("icon", "applications-system")
         if icon.lower().endswith(IMAGE_SUFFIXES):
             icon = RAW.format(id=plugin_id, file=icon)
+        targets = target_items(metadata)
         item = {
             "id": plugin_id,
             "name": metadata["name"],
@@ -32,18 +54,22 @@ def build():
             "version": metadata["version"],
             "author": author_name(metadata.get("author")),
             "icon": icon,
-            "type": metadata["type"],
-            "target": metadata["target"],
-            "mode": metadata["mode"],
+            "targets": targets,
             "tags": metadata.get("tags", []),
             "sourceUrl": SOURCE.format(id=plugin_id),
             "siteUrl": SITE.format(id=plugin_id),
             "license": store["license"],
             "repository": store["repository"],
             "featured": store.get("featured", False),
-            "deprecated": store.get("deprecated", False),
-            "settings": metadata.get("settings", {})
+            "deprecated": store.get("deprecated", False)
         }
+        if len(targets) == 1:
+            item.update({
+                "type": targets[0]["type"],
+                "target": targets[0]["target"],
+                "mode": targets[0]["mode"],
+                "settings": targets[0]["settings"]
+            })
         for key in ("homepage", "upstream", "replacement"):
             if key in store:
                 item[key] = store[key]
