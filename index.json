@@ -9,9 +9,53 @@
       "version": "2.0.0",
       "author": "LunaDash contributors",
       "icon": "preferences-desktop-effects",
-      "type": "effect",
-      "target": "window-animation",
-      "mode": "replace",
+      "targets": [
+        {
+          "id": "window-animation",
+          "target": "window-animation",
+          "type": "effect",
+          "mode": "replace",
+          "settings": {
+            "duration": {
+              "type": "integer",
+              "control": "number",
+              "label": "Animation duration",
+              "description": "Milliseconds; zero disables animation.",
+              "default": 260,
+              "minimum": 0,
+              "maximum": 600,
+              "step": 10
+            },
+            "softFocus": {
+              "type": "boolean",
+              "control": "toggle",
+              "label": "Fade on focus",
+              "default": true
+            },
+            "easing": {
+              "type": "string",
+              "control": "select",
+              "label": "Easing curve",
+              "default": "outQuint",
+              "enum": [
+                "linear",
+                "outCubic",
+                "outQuint",
+                "inOutCubic"
+              ]
+            },
+            "exitScale": {
+              "type": "number",
+              "control": "slider",
+              "label": "Closing scale",
+              "default": 1,
+              "minimum": 0.5,
+              "maximum": 1,
+              "step": 0.01
+            }
+          }
+        }
+      ],
       "tags": [
         "Animation",
         "Native"
@@ -22,6 +66,9 @@
       "repository": "https://github.com/LuYishan-4/LunaDash",
       "featured": true,
       "deprecated": false,
+      "type": "effect",
+      "target": "window-animation",
+      "mode": "replace",
       "settings": {
         "duration": {
           "type": "integer",
@@ -70,9 +117,15 @@
       "version": "1.0.0",
       "author": "LuYishan",
       "icon": "clock",
-      "type": "quickshell",
-      "target": "desktop-widgets",
-      "mode": "augment",
+      "targets": [
+        {
+          "id": "desktop-widgets",
+          "target": "desktop-widgets",
+          "type": "quickshell",
+          "mode": "augment",
+          "settings": {}
+        }
+      ],
       "tags": [
         "Widget",
         "Clock"
@@ -83,6 +136,9 @@
       "repository": "https://github.com/LuYishan-4/LunaDash",
       "featured": true,
       "deprecated": false,
+      "type": "quickshell",
+      "target": "desktop-widgets",
+      "mode": "augment",
       "settings": {},
       "upstream": "https://github.com/LuYishan-4/LunaDash/tree/fix/plugin/qml/plugins/digital-clock"
     },
@@ -93,9 +149,22 @@
       "version": "1.0.0",
       "author": "LunaDash contributors",
       "icon": "preferences-system-windows",
-      "type": "effect",
-      "target": "window-layout",
-      "mode": "replace",
+      "targets": [
+        {
+          "id": "window-layout",
+          "target": "window-layout",
+          "type": "effect",
+          "mode": "replace",
+          "settings": {
+            "cascadeStep": {
+              "type": "integer",
+              "default": 32,
+              "minimum": 0,
+              "maximum": 96
+            }
+          }
+        }
+      ],
       "tags": [
         "Layout",
         "Stacking",
@@ -107,6 +176,9 @@
       "repository": "https://github.com/LuYishan-4/LunaDash",
       "featured": true,
       "deprecated": false,
+      "type": "effect",
+      "target": "window-layout",
+      "mode": "replace",
       "settings": {
         "cascadeStep": {
           "type": "integer",
