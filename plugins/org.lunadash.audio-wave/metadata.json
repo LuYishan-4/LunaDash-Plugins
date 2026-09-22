@@ -7,8 +7,8 @@
   "id": "org.lunadash.audio-wave",
   "name": "Audio Wave",
   "name[zh_TW]": "音訊波浪",
-  "description": "Live desktop-output spectrum with logarithmic gain and frame-synchronized attack/release smoothing. Requires the LunaDash audio-spectrum helper and parec.",
-  "description[zh_TW]": "依系統播放輸出的真實頻譜，使用對數增益與逐幀平滑動畫。需要 LunaDash audio-spectrum helper 與 parec。",
+  "description": "Large desktop-output spectrum with adaptive gain, distinct frequency peaks and frame-synchronized motion. Requires the LunaDash audio-spectrum helper and parec.",
+  "description[zh_TW]": "大幅度桌面播放頻譜，具自動增益、明顯頻帶起伏與逐幀平滑動態。需要 LunaDash audio-spectrum helper 與 parec。",
   "version": "1.0.1a",
   "author": {
     "name": "LunaDash contributors"
@@ -44,7 +44,7 @@
           "label": "Visualizer height",
           "default": 320,
           "minimum": 80,
-          "maximum": 420,
+          "maximum": 720,
           "step": 10
         },
         "bottomMargin": {
@@ -71,7 +71,7 @@
           "label": "Spectrum gain",
           "default": 2.4,
           "minimum": 0.4,
-          "maximum": 4,
+          "maximum": 6,
           "step": 0.1
         },
         "mirror": {
@@ -79,6 +79,30 @@
           "control": "toggle",
           "label": "Mirror wave profile",
           "default": true
+        },
+        "amplitudeScale": {
+          "type": "number",
+          "control": "slider",
+          "label": "Wave amplitude",
+          "default": 1.8,
+          "minimum": 0.5,
+          "maximum": 3,
+          "step": 0.1
+        },
+        "autoGain": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Normalize quiet playback",
+          "default": true
+        },
+        "barSpacing": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Bar spacing",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 10,
+          "step": 1
         }
       }
     }

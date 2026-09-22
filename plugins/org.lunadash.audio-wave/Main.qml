@@ -12,9 +12,13 @@ Item {
     property var levels: []
     property double lastFrame: 0
     property string monitorError: ""
+    property real spectrumPeak: 0.35
+    property real measuredRms: 0
 
     readonly property int bars: Math.max(24, Math.min(144, Number(settings.barCount ?? 88)))
-    readonly property real gain: Math.max(0.4, Math.min(4, Number(settings.sensitivity ?? 2.4)))
+    readonly property real gain: Math.max(0.4, Math.min(6, Number(settings.sensitivity ?? 2.4)))
+    readonly property real amplitudeScale: Math.max(0.5, Math.min(3, Number(settings.amplitudeScale ?? 1.8)))
+    readonly property bool normalize: Boolean(settings.autoGain ?? true)
     readonly property bool muted: Boolean((((shell.state.audio || {}).output || {}).muted) || false)
     readonly property color accent: (shell.state.appearance || {}).accent || "#9ccbfb"
     readonly property string defaultOutput: JSON.stringify(
@@ -29,6 +33,7 @@ Item {
                 return
             }
             measuredBands = state.bands.map(value => Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0)
+            measuredRms = Number.isFinite(state.rms) ? Math.max(0, state.rms) : 0
             lastFrame = Date.now()
             monitorError = ""
         } catch (error) {
@@ -39,7 +44,13 @@ Item {
 
     function advance(seconds) {
         const dt = Math.min(0.1, Math.max(0, seconds))
-        const active = !muted && Date.now() - lastFrame < 350 && measuredBands.length === 32
+        const active = !muted && Date.now() - lastFrame < 350 && measuredBands.length === 32 && measuredRms > 0.00005
+        const peak = active ? Math.max(...measuredBands) : 0
+        // Follow loud passages quickly and quiet passages slowly. A lower
+        // bound and the PCM noise gate prevent silence becoming full-height.
+        const peakTime = peak > spectrumPeak ? 0.04 : 1.4
+        spectrumPeak += (Math.max(0.18, peak) - spectrumPeak) * (1 - Math.exp(-dt / peakTime))
+        const normalization = normalize ? 0.88 / Math.max(0.18, spectrumPeak) : 1
         const next = []
         for (let i = 0; i < bars; ++i) {
             const position = (i + 0.5) / bars
@@ -49,9 +60,12 @@ Item {
             const fraction = sample - low
             const amplitude = active ? measuredBands[low] * (1 - fraction)
                 + measuredBands[Math.min(31, low + 1)] * fraction : 0
-            const target = Math.min(1, Math.pow(amplitude, 0.8) * gain)
+            // Retain the difference between bands instead of clipping most
+            // of a logarithmic spectrum at 1 when sensitivity is above 1.
+            const driven = Math.pow(amplitude * normalization, 1.25) * gain / 2.4
+            const target = Math.min(1, driven)
             const previous = levels[i] || 0
-            const blend = 1 - Math.exp(-dt / (target > previous ? 0.035 : 0.18))
+            const blend = 1 - Math.exp(-dt / (target > previous ? 0.022 : 0.14))
             next.push(previous + (target - previous) * blend)
         }
         levels = next
@@ -101,7 +115,7 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Math.max(0, Number(settings.bottomMargin ?? 0))
-        height: Math.min(parent.height * 0.72, Math.max(80, Number(settings.height ?? 320)))
+        height: Math.min(parent.height * 0.8, Math.max(80, Number(settings.height ?? 320)) * root.amplitudeScale)
         opacity: Math.max(0.15, Math.min(1, Number(settings.opacity ?? 0.86)))
         clip: true
 
@@ -110,8 +124,9 @@ Item {
             delegate: Rectangle {
                 required property int index
                 readonly property real level: root.levels[index] || 0
-                width: Math.max(1, (wave.width - (root.bars - 1) * 2) / root.bars)
-                x: index * (width + 2)
+                readonly property real gap: Math.max(1, Number(root.settings.barSpacing ?? 3))
+                width: Math.max(1, (wave.width - (root.bars - 1) * gap) / root.bars)
+                x: index * (width + gap)
                 anchors.bottom: parent.bottom
                 height: Math.max(2, wave.height * level)
                 radius: Math.min(5, width / 2)

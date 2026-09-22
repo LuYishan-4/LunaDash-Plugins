@@ -52,3 +52,7 @@ Store-only fields never replace the LunaDash runtime manifest.
 Audio Wave 1.0.1a requires the LunaDash `audio-spectrum` shell helper and `parec` (Arch: `libpulse`; Debian/Ubuntu: `pulseaudio-utils`), connected to PulseAudio or PipeWire-Pulse. It monitors playback output, never the default microphone, and keeps PCM in memory only. A 32-band stereo FFT replaces the earlier MPRIS/volume-driven sine animation. Logarithmic gain and frame-time attack/release smoothing make quiet playback visible without amplifying silence. Height, gain, opacity, bar count and mirrored frequency layout remain configurable. Missing audio support shows a diagnostic with bounded reconnect attempts. Desktop widgets stay inside the wallpaper Background layer.
 
 新版 Audio Wave 使用真實播放輸出 FFT 頻譜，搭配對數增益與逐幀平滑，不再靠 MPRIS 與音量設定產生假動畫。需要本體的 `audio-spectrum` helper 和 `parec`；不讀取預設麥克風，不儲存音訊。版本仍為 `1.0.1a`，本體新版 Store 會依來源雜湊辨識同版號修訂。
+
+Audio Wave now has a separate **Wave amplitude** multiplier (default 1.8×, up to 3×), which applies even when upgrading with an older saved height. Adaptive peak normalization makes quiet playback visible while retaining distinct frequency peaks; a PCM noise gate keeps silence at baseline. Attack/release is 22/140 ms, with configurable spacing and gain. The multiplier changes display height without inventing audio activity.
+
+新版增加獨立振幅倍率（預設 1.8 倍、最高 3 倍），保留舊設定更新也會生效。自動峰值正規化讓小聲音訊更明顯，保留各頻帶高低差，搭配 PCM 靜音門檻與 22/140 ms 逐幀平滑；可另外調整間距及增益。

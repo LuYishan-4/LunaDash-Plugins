@@ -5,7 +5,7 @@
     {
       "id": "org.lunadash.audio-wave",
       "name": "Audio Wave",
-      "description": "Live desktop-output spectrum with logarithmic gain and frame-synchronized attack/release smoothing. Requires the LunaDash audio-spectrum helper and parec.",
+      "description": "Large desktop-output spectrum with adaptive gain, distinct frequency peaks and frame-synchronized motion. Requires the LunaDash audio-spectrum helper and parec.",
       "version": "1.0.1a",
       "author": "LunaDash contributors",
       "icon": "audio-x-generic",
@@ -31,7 +31,7 @@
               "label": "Visualizer height",
               "default": 320,
               "minimum": 80,
-              "maximum": 420,
+              "maximum": 720,
               "step": 10
             },
             "bottomMargin": {
@@ -58,7 +58,7 @@
               "label": "Spectrum gain",
               "default": 2.4,
               "minimum": 0.4,
-              "maximum": 4,
+              "maximum": 6,
               "step": 0.1
             },
             "mirror": {
@@ -66,6 +66,30 @@
               "control": "toggle",
               "label": "Mirror wave profile",
               "default": true
+            },
+            "amplitudeScale": {
+              "type": "number",
+              "control": "slider",
+              "label": "Wave amplitude",
+              "default": 1.8,
+              "minimum": 0.5,
+              "maximum": 3,
+              "step": 0.1
+            },
+            "autoGain": {
+              "type": "boolean",
+              "control": "toggle",
+              "label": "Normalize quiet playback",
+              "default": true
+            },
+            "barSpacing": {
+              "type": "integer",
+              "control": "slider",
+              "label": "Bar spacing",
+              "default": 3,
+              "minimum": 1,
+              "maximum": 10,
+              "step": 1
             }
           }
         }
@@ -101,7 +125,7 @@
           "label": "Visualizer height",
           "default": 320,
           "minimum": 80,
-          "maximum": 420,
+          "maximum": 720,
           "step": 10
         },
         "bottomMargin": {
@@ -128,7 +152,7 @@
           "label": "Spectrum gain",
           "default": 2.4,
           "minimum": 0.4,
-          "maximum": 4,
+          "maximum": 6,
           "step": 0.1
         },
         "mirror": {
@@ -136,6 +160,30 @@
           "control": "toggle",
           "label": "Mirror wave profile",
           "default": true
+        },
+        "amplitudeScale": {
+          "type": "number",
+          "control": "slider",
+          "label": "Wave amplitude",
+          "default": 1.8,
+          "minimum": 0.5,
+          "maximum": 3,
+          "step": 0.1
+        },
+        "autoGain": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Normalize quiet playback",
+          "default": true
+        },
+        "barSpacing": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Bar spacing",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 10,
+          "step": 1
         }
       },
       "homepage": "https://luyishan-4.github.io/LunaDash-Plugins/plugins/org.lunadash.audio-wave/",
@@ -145,7 +193,7 @@
           {
             "path": "metadata.json",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.audio-wave/metadata.json",
-            "sha256": "cd0cf56fdfb7ceeb528e30ad3d0f6a6291441ca71411289e430e856937cea199"
+            "sha256": "a19aa6ef551fab1d28be9de8396f811c192c861b42a5a472dcc565b219ab2cb6"
           },
           {
             "path": "CMakeLists.txt",
@@ -155,7 +203,7 @@
           {
             "path": "Main.qml",
             "url": "https://raw.githubusercontent.com/LuYishan-4/LunaDash-Plugins/main/plugins/org.lunadash.audio-wave/Main.qml",
-            "sha256": "a1891a9fef84d32d9aeafd8b9e764affc88235b98c274ac9e4dc195fa471d7f6"
+            "sha256": "c4d2ec4f3f75eae9d9294238e33c73455e9abcc075d2a2a8881d783c65a36278"
           }
         ]
       }
