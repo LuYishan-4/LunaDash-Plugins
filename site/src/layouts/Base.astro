@@ -1,0 +1,43 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "LunaDash Plugins",
+  description = "Community plugins built for LunaDash Plugin SDK 2."
+} = Astro.props;
+const fullTitle = title === "LunaDash Plugins" ? title : title + " · LunaDash Plugins";
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#080b14" />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href={base}>
+        <span class="brand-mark">L</span>
+        <span>LunaDash Plugins</span>
+      </a>
+      <nav>
+        <a href={base}>Browse</a>
+        <a href={base + "submit/"}>Submit</a>
+        <a href="https://github.com/LuYishan-4/LunaDash-Plugins">GitHub</a>
+        <a href="https://github.com/LuYishan-4/LunaDash/tree/fix/plugin/docs/en">SDK docs</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer>
+      <p>Registry manifests are validated against LunaDash Plugin SDK 2 contracts. Review source before enabling third-party code.</p>
+    </footer>
+  </body>
+</html>

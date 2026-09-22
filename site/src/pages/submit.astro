@@ -1,0 +1,57 @@
+---
+import Base from "../layouts/Base.astro";
+
+const exampleManifest = JSON.stringify({
+  schemaVersion: 2,
+  sdk: { name: "LunaDash", apiVersion: 2 },
+  id: "org.example.plugin",
+  name: "Example plugin",
+  version: "1.0.0",
+  type: "quickshell",
+  target: "desktop-widgets",
+  mode: "augment",
+  entry: "Main.qml",
+  enabledByDefault: false,
+  settings: {}
+}, null, 2);
+---
+<Base title="Submit a plugin" description="How to publish a LunaDash Plugin SDK 2 extension.">
+  <section class="docs">
+    <span class="eyebrow">Contribute</span>
+    <h1>Publish through the registry.</h1>
+    <p class="lead">Every community plugin enters LunaDash through a pull request to this repository. The runtime manifest is checked by snapshots of LunaDash's own SDK 2 validator, settings schema, and target registry.</p>
+
+    <div class="docs-grid">
+      <article class="panel">
+        <span class="step">01</span>
+        <h2>Start from the SDK template</h2>
+        <p>Copy <code>template-plugin/</code>, choose a registered target, and keep the plugin ID equal to its folder name.</p>
+      </article>
+      <article class="panel">
+        <span class="step">02</span>
+        <h2>Use schema-driven settings</h2>
+        <p>Declare boolean, enum, numeric, slider, or text options in <code>metadata.json</code>. LunaDash generates the controls.</p>
+      </article>
+      <article class="panel">
+        <span class="step">03</span>
+        <h2>Submit source only</h2>
+        <p>Do not submit built libraries, generated shader packages, object files, archives, or SDK build receipts.</p>
+      </article>
+      <article class="panel">
+        <span class="step">04</span>
+        <h2>Pass CI and review</h2>
+        <p>Contract validation, source-only checks, PR scope checks, and the Astro build must pass before maintainer review.</p>
+      </article>
+    </div>
+
+    <article class="panel manifest-example">
+      <h2>Minimal Quickshell manifest</h2>
+      <pre><code>{exampleManifest}</code></pre>
+    </article>
+
+    <div class="hero-actions">
+      <a class="button primary" href="https://github.com/LuYishan-4/LunaDash-Plugins/blob/main/CONTRIBUTING.md">Full contribution rules</a>
+      <a class="button" href="https://github.com/LuYishan-4/LunaDash/tree/fix/plugin/docs/en/PLUGINS.md">LunaDash SDK docs</a>
+    </div>
+  </section>
+</Base>
