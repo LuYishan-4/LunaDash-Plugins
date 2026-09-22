@@ -12,7 +12,7 @@ The repository follows the publishing model of `caelestia-kde-plugins`—one plu
 author -> plugins/<id>/ -> pull request -> SDK validation + review
        -> merge -> generated index.json -> Astro catalogue -> LunaDash Store
 ```
-
+ 
 ## SDK 2 plugin types
 
 | Type | Purpose |
