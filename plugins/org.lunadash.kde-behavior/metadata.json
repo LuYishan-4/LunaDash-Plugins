@@ -6,8 +6,8 @@
   },
   "id": "org.lunadash.kde-behavior",
   "name": "KDE Behavior Pack",
-  "description": "KDE-inspired floating capsules, freeform windows, dashboard access, system status, window rules and animations for LunaDash.",
-  "version": "1.0.1a",
+  "description": "Caelestia-inspired KDE taskbar capsules, occupied-workspace navigation, freeform stacking windows, window rules and animations for LunaDash.",
+  "version": "1.1.0",
   "author": {
     "name": "LunaDash contributors"
   },
@@ -88,6 +88,30 @@
           "control": "toggle",
           "label": "Show dashboard button",
           "default": true
+        },
+        "occupiedWorkspacesOnly": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show occupied workspaces only",
+          "default": true
+        },
+        "workspaceScroll": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Scroll workspace capsule to switch",
+          "default": true
+        },
+        "volumeScroll": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Scroll volume status to adjust",
+          "default": true
+        },
+        "showPowerButton": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Show power button with workspaces",
+          "default": true
         }
       }
     },
@@ -117,6 +141,21 @@
           "minimum": 0,
           "maximum": 80,
           "step": 1
+        },
+        "edgePadding": {
+          "type": "integer",
+          "control": "slider",
+          "label": "Window edge padding",
+          "default": 24,
+          "minimum": 0,
+          "maximum": 96,
+          "step": 2
+        },
+        "resetCascadeWhenEmpty": {
+          "type": "boolean",
+          "control": "toggle",
+          "label": "Restart cascade on an empty workspace",
+          "default": true
         }
       }
     },
