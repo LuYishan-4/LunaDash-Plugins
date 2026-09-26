@@ -16,8 +16,20 @@ Item {
         ? style.edge : "top"
     readonly property bool vertical: edge === "left" || edge === "right"
     readonly property int workspace: Number((shell.interaction || {}).workspace ?? shell.state.workspace ?? 0)
-    readonly property var clients: ((shell.interaction || {}).clients || shell.state.clients || [])
-        .filter(client => client.mapped && !client.minimized && client.workspace === workspace)
+    readonly property var allClients: ((shell.interaction || {}).clients || shell.state.clients || [])
+        .filter(client => client.mapped && !client.minimized)
+    readonly property var clients: allClients.filter(client => client.workspace === workspace)
+    readonly property int workspaceCount: Math.max(
+        Number((shell.state.appearance || {}).workspaceCount || 4), workspace + 1)
+    readonly property var workspaceIndices: {
+        const result = []
+        for (let index = 0; index < workspaceCount; ++index) {
+            const occupied = allClients.some(client => Number(client.workspace) === index)
+            if (!(settings.occupiedWorkspacesOnly ?? true) || occupied || index === workspace)
+                result.push(index)
+        }
+        return result
+    }
     readonly property var audio: shell.state.audio || ({})
     readonly property var network: shell.state.network || ({})
     readonly property color accent: style.accent && style.accent !== "inherit"
@@ -61,6 +73,13 @@ Item {
         if (source.length)
             return source
         return iconSource(item.id)
+    }
+
+    function stepWorkspace(delta) {
+        if (!(settings.workspaceScroll ?? true) || workspaceCount < 2)
+            return
+        const next = (workspace + delta + workspaceCount) % workspaceCount
+        shell.command("workspace", next)
     }
 
     Timer {
@@ -314,12 +333,11 @@ Item {
                     anchors.centerIn: parent
                     spacing: 4
                     Repeater {
-                        model: Math.max((root.shell.state.appearance || {}).workspaceCount || 4,
-                                        root.workspace + 1)
+                        model: root.workspaceIndices
                         delegate: Loader {
-                            required property int index
+                            required property int modelData
                             sourceComponent: workspaceChip
-                            onLoaded: item.index = index
+                            onLoaded: item.index = modelData
                         }
                     }
                     Rectangle {
@@ -329,7 +347,8 @@ Item {
                         color: root.borderColor(0.20)
                     }
                     Item {
-                        width: 28
+                        visible: settings.showPowerButton ?? true
+                        width: visible ? 28 : 0
                         height: 28
                         Text { anchors.centerIn: parent; text: "⏻"; color: "#ff8c9d"; font.pixelSize: 12 }
                         MouseArea {
@@ -338,6 +357,12 @@ Item {
                             onClicked: root.shell.logoutOpen = !root.shell.logoutOpen
                         }
                     }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    onWheel: wheel => root.stepWorkspace(
+                        wheel.angleDelta.y > 0 || wheel.angleDelta.x > 0 ? -1 : 1)
                 }
             }
 
@@ -463,6 +488,8 @@ Item {
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: root.shell.volumePopupOpen = !root.shell.volumePopupOpen
                                 onWheel: wheel => {
+                                    if (!(settings.volumeScroll ?? true))
+                                        return
                                     const current = Number((root.audio.output || {}).volume || 0)
                                     const next = Math.max(0, Math.min(100,
                                         current + (wheel.angleDelta.y > 0 ? 5 : -5)))
@@ -560,14 +587,12 @@ Item {
                         spacing: 3
                         Loader { anchors.horizontalCenter: parent.horizontalCenter; sourceComponent: launcherButton }
                         Repeater {
-                            model: settings.showWorkspaceSwitcher
-                                ? Math.max((root.shell.state.appearance || {}).workspaceCount || 4, root.workspace + 1)
-                                : 0
+                            model: settings.showWorkspaceSwitcher ? root.workspaceIndices : []
                             delegate: Loader {
-                                required property int index
+                                required property int modelData
                                 anchors.horizontalCenter: parent ? parent.horizontalCenter : undefined
                                 sourceComponent: workspaceChip
-                                onLoaded: item.index = index
+                                onLoaded: item.index = modelData
                             }
                         }
                     }
