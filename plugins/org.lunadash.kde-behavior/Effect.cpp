@@ -13,7 +13,7 @@ namespace LunaDash {
 namespace {
 QHash<QString, int> rememberedWorkspace;
 QHash<int, int> cascadeSerial;
-QSet<qint64> placedWindows;
+QHash<qint64, int> placedWindows;
 
 int writeObject(const QJsonObject &object, char *response, size_t capacity) {
   const auto bytes = QJsonDocument(object).toJson(QJsonDocument::Compact);
@@ -41,7 +41,32 @@ int processWindowLayout(const QJsonObject &input, char *response,
   const QString placement = settings.value("placement").toString("cascade");
   const int offset =
       std::clamp(settings.value("cascadeOffset").toInt(28), 0, 80);
+  const int padding =
+      std::clamp(settings.value("edgePadding").toInt(24), 0,
+                 std::max(0, std::min(area.width(), area.height()) / 3));
+  const bool resetWhenEmpty =
+      settings.value("resetCascadeWhenEmpty").toBool(true);
   const int workspace = context.value("workspace").toInt();
+
+  if (resetWhenEmpty) {
+    bool hasExistingWindow = false;
+    for (const auto &value : windows) {
+      const auto item = value.toObject();
+      if (!fresh.contains(item.value("id").toInteger())) {
+        hasExistingWindow = true;
+        break;
+      }
+    }
+    if (!hasExistingWindow) {
+      cascadeSerial[workspace] = 0;
+      for (auto it = placedWindows.begin(); it != placedWindows.end();) {
+        if (it.value() == workspace)
+          it = placedWindows.erase(it);
+        else
+          ++it;
+      }
+    }
+  }
 
   for (int index = 0; index < windows.size(); ++index) {
     auto item = windows[index].toObject();
@@ -58,18 +83,24 @@ int processWindowLayout(const QJsonObject &input, char *response,
     if (placement == "cascade") {
       int serial = cascadeSerial.value(workspace, 0);
       if (!placedWindows.contains(id)) {
-        placedWindows.insert(id);
+        placedWindows.insert(id, workspace);
         cascadeSerial[workspace] = serial + 1;
       } else {
         serial = std::max(0, serial - 1);
       }
       const int slot = serial % 7;
-      const int originX = area.x() + std::min(48, std::max(0, area.width() / 10));
-      const int originY = area.y() + std::min(48, std::max(0, area.height() / 10));
+      const int availableX = std::max(0, area.width() - width);
+      const int availableY = std::max(0, area.height() - height);
+      const int safePaddingX = std::min(padding, availableX / 2);
+      const int safePaddingY = std::min(padding, availableY / 2);
+      const int originX = area.x() + safePaddingX;
+      const int originY = area.y() + safePaddingY;
       x = originX + slot * offset;
       y = originY + slot * offset;
-      x = std::clamp(x, area.x(), area.right() - width + 1);
-      y = std::clamp(y, area.y(), area.bottom() - height + 1);
+      const int maximumX = area.right() - width + 1 - safePaddingX;
+      const int maximumY = area.bottom() - height + 1 - safePaddingY;
+      x = std::clamp(x, originX, std::max(originX, maximumX));
+      y = std::clamp(y, originY, std::max(originY, maximumY));
     }
 
     item["x"] = x;
